@@ -7,4 +7,9 @@
     <string name="expense">Expense</string>
     <string name="title_add_transaction">Add transaction</string>
     <string name="account_name_required">Account name required</string>
+    <string name="please_select">Please select</string>
+    <string name="select_income">Select income</string>
+    <string name="select_expense">Select expense</string>
+    <string name="select_account">Select account</string>
+    <string name="enter_amount">Enter amount</string>
 </resources>

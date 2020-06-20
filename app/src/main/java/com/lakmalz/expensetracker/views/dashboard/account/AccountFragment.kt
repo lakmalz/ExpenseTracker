@@ -1,25 +1,25 @@
-package com.lakmalz.expensetracker.ui.dashboard
+package com.lakmalz.expensetracker.views.dashboard.account
 
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lakmalz.expensetracker.R
+import com.lakmalz.expensetracker.data.db.entity.AccountsData
 import kotlinx.android.synthetic.main.fragment_account.*
 
 class AccountFragment : Fragment()/*, SwipeRefreshLayout.OnRefreshListener*/ {
-    private lateinit var transactionAdapter: TransactionAdapter
-    private var accountTypeId: String? = null
+    private lateinit var transactionAdapter: AccountTransactionAdapter
+    private var accountsData: AccountsData? = null
 
     companion object {
-        fun newInstance(accountTypeId: String): AccountFragment {
-            val frag = AccountFragment()
-            frag.accountTypeId = accountTypeId
+        fun newInstance(accountsData: AccountsData): AccountFragment {
+            val frag =
+                AccountFragment()
+            frag.accountsData = accountsData
             return frag
         }
     }
@@ -42,32 +42,14 @@ class AccountFragment : Fragment()/*, SwipeRefreshLayout.OnRefreshListener*/ {
     }
 
     private fun initAdapter() {
-        transactionAdapter = TransactionAdapter()
+        transactionAdapter =
+            AccountTransactionAdapter()
         rv_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
         }
-        transactionAdapter.setDataSet(sampleList())
+//        transactionAdapter.setDataSet(sampleList())
     }
 
-    fun sampleList(): ArrayList<String> {
-        val list = ArrayList<String>()
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        list.add("")
-        return list
-    }
 
 }

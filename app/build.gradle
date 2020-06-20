@@ -28,34 +28,35 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Android UI Layout Library and backward-compatible Library(Legacy)
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
-    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+
+    //Life Cycle Components
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
-    implementation "io.reactivex.rxjava2:rxjava:2.1.6"
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation "com.google.dagger:dagger:2.14.1"
-    kapt "com.google.dagger:dagger-compiler:2.14.1"
+    //Android Unit Test and U.I. Test Library
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Kotlin Library
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.2.0'
+
+    //Room -> use annotationProcessor for java, kapt for kotlin
+    implementation "androidx.room:room-runtime:2.2.5" //android.arch.persistence.room:runtime
+    kapt "androidx.room:room-compiler:2.2.5" //android.arch.persistence.room:compiler
+    testImplementation "androidx.room:room-testing:2.2.5" //android.arch.persistence.room:testing
+
+    //Work Manager
+    implementation "androidx.work:work-runtime:2.3.4" // (Java only)
+    implementation "androidx.work:work-runtime-ktx:2.3.4" // Kotlin + coroutines
+
     //Stetho
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
-    //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
-    implementation "androidx.preference:preference-ktx:1.1.0"
-    implementation 'com.bignerdranch.android:simple-item-decoration:1.0.0'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 }

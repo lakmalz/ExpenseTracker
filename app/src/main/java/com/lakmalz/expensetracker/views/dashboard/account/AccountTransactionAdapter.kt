@@ -1,11 +1,11 @@
-package com.lakmalz.expensetracker.ui.dashboard
+package com.lakmalz.expensetracker.views.dashboard.account
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lakmalz.expensetracker.R
 import com.lakmalz.expensetracker.utils.inflate
 
-class TransactionAdapter(/*var onItemChecked: (item: String) -> Unit, var onItemDeleteClick: (position: Int, item: String) -> Unit*/) : RecyclerView.Adapter<TransactionAdapter.ItemViewHolder>() {
+class AccountTransactionAdapter(/*var onItemChecked: (item: String) -> Unit, var onItemDeleteClick: (position: Int, item: String) -> Unit*/) : RecyclerView.Adapter<AccountTransactionAdapter.ItemViewHolder>() {
 
     private var list: ArrayList<String> = ArrayList()
     fun setDataSet(_list: ArrayList<String>) {
