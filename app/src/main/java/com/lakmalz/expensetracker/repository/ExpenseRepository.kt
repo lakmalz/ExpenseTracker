@@ -32,6 +32,18 @@ class ExpenseRepository(applicationContext: Application) {
         }
     }
 
+    fun delete(entity: ExpenseCatData) {
+        AsyncTask.execute {
+            expenseCatDataDao.delete(entity)
+        }
+    }
+
+    fun update(entity: ExpenseCatData) {
+        AsyncTask.execute {
+            expenseCatDataDao.update(entity)
+        }
+    }
+
     fun getAll(): LiveData<List<ExpenseCatData>>{
         return expenseCatDataDao.getAll()
     }

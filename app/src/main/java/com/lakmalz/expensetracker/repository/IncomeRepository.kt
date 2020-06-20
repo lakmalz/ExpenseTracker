@@ -30,6 +30,18 @@ class IncomeRepository(applicationContext: Application) {
         }
     }
 
+    fun delete(entity: IncomeCatData) {
+        AsyncTask.execute {
+            incomeCatDataDao.delete(entity)
+        }
+    }
+
+    fun update(entity: IncomeCatData) {
+        AsyncTask.execute {
+            incomeCatDataDao.update(entity)
+        }
+    }
+
     fun getAll(): LiveData<List<IncomeCatData>>{
         return incomeCatDataDao.getAll()
     }

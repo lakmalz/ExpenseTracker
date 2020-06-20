@@ -6,14 +6,19 @@ import androidx.lifecycle.LiveData
 import com.lakmalz.expensetracker.data.db.entity.IncomeCatData
 import com.lakmalz.expensetracker.repository.IncomeRepository
 
-class IncomeListViewModel : AndroidViewModel {
-    private lateinit var incomeRepository: IncomeRepository
-    constructor(application: Application) : super(application) {
-        incomeRepository = IncomeRepository.getInstance(application)
-    }
+class IncomeListViewModel(application: Application) : AndroidViewModel(application) {
+    private var incomeRepository: IncomeRepository = IncomeRepository.getInstance(application)
 
     fun insert(entity: IncomeCatData) {
         incomeRepository.insert(entity)
+    }
+
+    fun delete(entity: IncomeCatData) {
+        incomeRepository.delete(entity)
+    }
+
+    fun update(entity: IncomeCatData) {
+        incomeRepository.update(entity)
     }
 
     fun getAll(): LiveData<List<IncomeCatData>> {

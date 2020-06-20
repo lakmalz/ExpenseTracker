@@ -62,18 +62,18 @@ abstract class AppDatabase : RoomDatabase() {
 
             override fun doInBackground(vararg param : Unit) {
                 // Accounts
-                accountsDAO?.insert(AccountsData("Cash"))
-                accountsDAO?.insert(AccountsData("Credit Card"))
-                accountsDAO?.insert(AccountsData("Bank account"))
+                accountsDAO?.insert(AccountsData("Cash", false))
+                accountsDAO?.insert(AccountsData("Credit Card", false))
+                accountsDAO?.insert(AccountsData("Bank account", false))
                 // Expenses
-                expenseDAO?.insert(ExpenseCatData("Tax"))
-                expenseDAO?.insert(ExpenseCatData("Grocery"))
-                expenseDAO?.insert(ExpenseCatData("Entertainment"))
-                expenseDAO?.insert(ExpenseCatData("Gym"))
-                expenseDAO?.insert(ExpenseCatData("Health"))
+                expenseDAO?.insert(ExpenseCatData("Tax", false))
+                expenseDAO?.insert(ExpenseCatData("Grocery", false))
+                expenseDAO?.insert(ExpenseCatData("Entertainment", false))
+                expenseDAO?.insert(ExpenseCatData("Gym", false))
+                expenseDAO?.insert(ExpenseCatData("Health", false))
                 // Income
-                incomeDAO?.insert(IncomeCatData("Salary"))
-                incomeDAO?.insert(IncomeCatData("Dividends"))
+                incomeDAO?.insert(IncomeCatData("Salary", false))
+                incomeDAO?.insert(IncomeCatData("Dividends", false))
             }
         }
     }

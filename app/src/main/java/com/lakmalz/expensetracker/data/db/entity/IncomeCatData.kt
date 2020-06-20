@@ -7,17 +7,22 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class IncomeCatData(
-    var name: String?
+    var name: String?,
+    var isActive: Boolean?
 ): Parcelable{
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
-    constructor(parcel: Parcel) : this(parcel.readString()) {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean
+    ) {
         id = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
+        parcel.writeValue(isActive)
         parcel.writeInt(id)
     }
 
@@ -34,4 +39,6 @@ data class IncomeCatData(
             return arrayOfNulls(size)
         }
     }
+
+
 }

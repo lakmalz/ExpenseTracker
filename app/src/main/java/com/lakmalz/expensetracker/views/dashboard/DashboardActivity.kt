@@ -29,24 +29,33 @@ class DashboardActivity : BaseActivity() {
         setTabBar()
     }
 
-    private fun setTabBar() {
-        val tabAdapter = DashboardTabAdapter(this)
-        view_pager.adapter = tabAdapter
+    private fun initActionBar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.title_dashboard)
+        setTabBar()
+    }
 
-        viewModel.getAll().observe(this, Observer { account ->
-            tabAdapter.setTabTitle(account as ArrayList<AccountsData>)
-            val titleList = account.map {
-                it.name
+    private fun setTabBar() {
+
+        viewModel.getAllASC().observe(this, Observer {
+            val tabAdapter = DashboardTabAdapter(this, it as ArrayList<AccountsData>)
+            view_pager.adapter = tabAdapter
+            val titleList = it.map { account ->
+                account.name
             }
             TabLayoutMediator(tab_layout, view_pager) { tab: TabLayout.Tab, position: Int ->
-                tab.text = titleList[position]
+                try {
+                    tab.text = titleList[position]
+                } catch (e: Exception) {
+                }
             }.attach()
         })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_add-> {
+            R.id.action_add -> {
                 startActivity(AddNewTransactionActivity.getIntent(this))
             }
         }
@@ -58,9 +67,4 @@ class DashboardActivity : BaseActivity() {
         return true
     }
 
-    private fun initActionBar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = getString(R.string.title_dashboard)
-        setTabBar()
-    }
 }

@@ -30,7 +30,23 @@ class AccountRepository(applicationContext: Application) {
         }
     }
 
+    fun delete(entity: AccountsData) {
+        AsyncTask.execute {
+            accountDataDAO.delete(entity)
+        }
+    }
+
+    fun update(entity: AccountsData) {
+        AsyncTask.execute {
+            accountDataDAO.update(entity)
+        }
+    }
+
     fun getAll(): LiveData<List<AccountsData>>{
         return accountDataDAO.getAll()
+    }
+
+    fun getAllASC(): LiveData<List<AccountsData>>{
+        return accountDataDAO.getAllASC()
     }
 }

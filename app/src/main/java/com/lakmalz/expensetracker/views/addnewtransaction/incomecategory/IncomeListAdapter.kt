@@ -8,7 +8,7 @@ import com.lakmalz.expensetracker.data.db.entity.IncomeCatData
 import com.lakmalz.expensetracker.utils.inflate
 import kotlinx.android.synthetic.main.list_item_category.view.*
 
-class IncomeListAdapter(val onClickItem:(item: IncomeCatData) -> Unit) : RecyclerView.Adapter<IncomeListAdapter.ItemViewHolder>() {
+class IncomeListAdapter(val onClickItem:(item: IncomeCatData) -> Unit, val onLongPressedItem:(item: IncomeCatData) -> Unit) : RecyclerView.Adapter<IncomeListAdapter.ItemViewHolder>() {
     private var list: ArrayList<IncomeCatData> = ArrayList()
     fun setDataSet(_list: ArrayList<IncomeCatData>) {
         list.clear()
@@ -28,6 +28,10 @@ class IncomeListAdapter(val onClickItem:(item: IncomeCatData) -> Unit) : Recycle
             txt_transaction_name.text = item.name
             itemView.setOnClickListener {
                 onClickItem(item)
+            }
+            itemView.setOnLongClickListener {
+                onLongPressedItem(item)
+                return@setOnLongClickListener true
             }
         }
     }

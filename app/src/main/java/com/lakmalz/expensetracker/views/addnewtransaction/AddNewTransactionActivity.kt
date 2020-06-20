@@ -2,10 +2,12 @@ package com.lakmalz.expensetracker.views.addnewtransaction
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
@@ -16,7 +18,6 @@ import com.lakmalz.expensetracker.data.db.entity.ExpenseCatData
 import com.lakmalz.expensetracker.data.db.entity.IncomeCatData
 import com.lakmalz.expensetracker.data.db.entity.TransactionsData
 import com.lakmalz.expensetracker.model.TransactionTypes
-import com.lakmalz.expensetracker.utils.Constant
 import com.lakmalz.expensetracker.utils.Constant.Companion.EXTRAS_ACCOUNT_ITEM
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_ACCOUNT_LIST
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_EXPENSE_LIST
@@ -26,11 +27,10 @@ import com.lakmalz.expensetracker.views.addnewtransaction.expensecategory.Expens
 import com.lakmalz.expensetracker.views.addnewtransaction.incomecategory.IncomeSelectionListActivity
 import com.lakmalz.expensetracker.views.addnewtransaction.selectaccounttype.AccountSelectionListActivity
 import kotlinx.android.synthetic.main.activity_add_new_transaction.*
-import java.text.NumberFormat
 import java.util.*
 
 
-class AddNewTransactionActivity : BaseActivity() {
+class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var viewModel: AddNewTransactionViewModel
     var transactionType = TransactionTypes.EXPENSE.name
@@ -51,32 +51,16 @@ class AddNewTransactionActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = getString(R.string.title_add_transaction)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_white)
         setTransactionType()
-
-        edt_account.setOnClickListener {
-            val intent = AccountSelectionListActivity.getIntent(this)
-            startActivityForResult(intent, Constant.REQUEST_ACCOUNT_LIST)
-        }
-
-        edt_category.setOnClickListener {
-            when (transactionType) {
-                TransactionTypes.INCOME.name -> {
-                    val intent = IncomeSelectionListActivity.getIntent(this)
-                    startActivityForResult(intent, Constant.REQUEST_INCOME_LIST)
-                }
-                TransactionTypes.EXPENSE.name -> {
-                    val intent = ExpenseSelectionListActivity.getIntent(this)
-                    startActivityForResult(intent, Constant.REQUEST_EXPENSE_LIST)
-                }
-            }
-        }
+        edt_account.setOnClickListener(this)
+        edt_category.setOnClickListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_done -> {
                 saveTransaction()
-                onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -86,29 +70,45 @@ class AddNewTransactionActivity : BaseActivity() {
         if (!validation()) {
             return
         }
+
         val transaction = TransactionsData()
-        transaction.accId = (edt_account.tag as AccountsData).id
+        val accountData = (edt_account.tag as AccountsData)
+        transaction.accId = accountData.id
         when (transactionType) {
             TransactionTypes.INCOME.name -> {
-                transaction.catId =(edt_category.tag as IncomeCatData).id
+                val income = edt_category.tag as IncomeCatData
+                transaction.catId = income.id
                 transaction.isIncome = true
+                transaction.amount = edt_amount.text.toString().toDouble()
+                transaction.catName = income.name
+
+                income.isActive = true
+                viewModel.updateIncomeCatType(income)
             }
             TransactionTypes.EXPENSE.name -> {
-                transaction.catId =(edt_category.tag as ExpenseCatData).id
+                val expense = edt_category.tag as ExpenseCatData
+                transaction.catId = expense.id
                 transaction.isIncome = false
+                transaction.amount = -edt_amount.text.toString().toDouble()
+                transaction.catName = expense.name
+
+                expense.isActive = true
+                viewModel.updateExpenseCatType(expense)
             }
         }
-
-        transaction.amount = edt_amount.text.toString().toDouble()
         transaction.currency = Currency.getInstance(Locale.getDefault()).currencyCode
         transaction.timestamp = System.currentTimeMillis()
         viewModel.insert(transaction)
 
-        /*val format: NumberFormat = NumberFormat.getCurrencyInstance()
-        format.maximumFractionDigits = 0
-        format.currency = Currency.getInstance("EUR")
-
-        format.format(1000000)*/
+        accountData.isActive = true
+        viewModel.updateAccountType(accountData)
+        Utils.showMessage(
+            this,
+            getString(R.string.transaction_added_successful),
+            DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+                onBackPressed()
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -190,7 +190,8 @@ class AddNewTransactionActivity : BaseActivity() {
     private fun resetFields() {
         edt_category.hint = getString(R.string.select_expense)
         edt_account.hint = getString(R.string.select_account)
-        edt_amount.hint = getString(R.string.enter_amount)
+        edt_amount.hint =
+            "${getString(R.string.enter_amount)} (${Utils.getCurrencyInstance().currency})"
         edt_amount.text.clear()
         edt_category.text.clear()
         edt_account.text.clear()
@@ -198,20 +199,53 @@ class AddNewTransactionActivity : BaseActivity() {
     }
 
     private fun validation(): Boolean {
-        if (edt_account.tag == null) {
-            showMessage("Account is required.")
-            return false
-        } else if (edt_category.tag == null) {
-            if (transactionType == TransactionTypes.INCOME.name) {
-                showMessage("Income is required.")
-            } else {
-                showMessage("Expense is required.")
+        when {
+            edt_account.tag == null -> {
+                showMessage(getString(R.string.account_name_is_required))
+                return false
             }
-            return false
-        } else if (edt_amount.text.isNullOrEmpty()) {
-            showMessage("Amount is required.")
-            return false
+            edt_category.tag == null -> {
+                if (transactionType == TransactionTypes.INCOME.name) {
+                    showMessage(getString(R.string.income_is_required))
+                } else {
+                    showMessage(getString(R.string.expense_is_required))
+                }
+                return false
+            }
+            edt_amount.text.isNullOrEmpty() -> {
+                showMessage(getString((R.string.amount_is_required)))
+                return false
+            }
+            else -> return true
         }
-        return true
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            edt_category.id -> {
+                clickOnCategory()
+            }
+            edt_account.id -> {
+                clickOnAccount()
+            }
+        }
+    }
+
+    private fun clickOnAccount() {
+        val intent = AccountSelectionListActivity.getIntent(this)
+        startActivityForResult(intent, REQUEST_ACCOUNT_LIST)
+    }
+
+    private fun clickOnCategory() {
+        when (transactionType) {
+            TransactionTypes.INCOME.name -> {
+                val intent = IncomeSelectionListActivity.getIntent(this)
+                startActivityForResult(intent, REQUEST_INCOME_LIST)
+            }
+            TransactionTypes.EXPENSE.name -> {
+                val intent = ExpenseSelectionListActivity.getIntent(this)
+                startActivityForResult(intent, REQUEST_EXPENSE_LIST)
+            }
+        }
     }
 }

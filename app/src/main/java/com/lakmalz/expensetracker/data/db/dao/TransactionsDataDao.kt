@@ -12,6 +12,12 @@ interface TransactionsDataDao {
     @Query("SELECT * FROM TransactionsData")
     fun getAll(): LiveData<List<TransactionsData>>
 
+    @Query("SELECT * FROM TransactionsData WHERE accId =:accId  ORDER BY timestamp DESC")
+    fun getAllByAccountId(accId: Int): LiveData<List<TransactionsData>>
+
+    @Query("SELECT SUM(amount) FROM TransactionsData WHERE accId =:accId")
+    fun getBalance(accId: Int): LiveData<Double>
+
     @Insert
     fun insert(transactionsData: TransactionsData)
 

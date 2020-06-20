@@ -15,4 +15,6 @@
     <color name="color_chip_normal">#B3B3B3</color>
     <color name="view_background">#E6E6E6</color>
     <color name="red_light_color">#FFD5D2</color>
+    <color name="red_text">#BA0A0A</color>
+    <color name="green_text">#1AC345</color>
 </resources>
