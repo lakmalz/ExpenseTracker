@@ -10,8 +10,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lakmalz.expensetracker.R
 import com.lakmalz.expensetracker.base.BaseActivity
 import com.lakmalz.expensetracker.data.db.entity.AccountsData
+import com.lakmalz.expensetracker.model.SelectionTypes
 import com.lakmalz.expensetracker.views.addnewtransaction.AddNewTransactionActivity
-import com.lakmalz.expensetracker.views.addnewtransaction.selectaccounttype.AccountSelectionListActivity
+import com.lakmalz.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : BaseActivity() {
@@ -29,7 +30,7 @@ class DashboardActivity : BaseActivity() {
         initActionBar()
         setTabBar()
         btn_add_account.setOnClickListener {
-            val intent = AccountSelectionListActivity.getIntent(this)
+            val intent = SelectionListActivity.getIntent(this, true, SelectionTypes.ACCOUNT.value)
             startActivity(intent)
         }
     }

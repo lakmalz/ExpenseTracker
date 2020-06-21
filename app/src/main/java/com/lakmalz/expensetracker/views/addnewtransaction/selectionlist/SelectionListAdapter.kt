@@ -1,30 +1,27 @@
-package com.lakmalz.expensetracker.views.addnewtransaction.incomecategory
+package com.lakmalz.expensetracker.views.addnewtransaction.selectionlist
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lakmalz.expensetracker.R
-import com.lakmalz.expensetracker.data.db.entity.AccountsData
-import com.lakmalz.expensetracker.data.db.entity.IncomeCatData
+import com.lakmalz.expensetracker.model.SelectionModel
 import com.lakmalz.expensetracker.utils.inflate
 import kotlinx.android.synthetic.main.list_item_category.view.*
 
-class IncomeListAdapter(val onClickItem:(item: IncomeCatData) -> Unit, val onLongPressedItem:(item: IncomeCatData) -> Unit) : RecyclerView.Adapter<IncomeListAdapter.ItemViewHolder>() {
-    private var list: ArrayList<IncomeCatData> = ArrayList()
-    fun setDataSet(_list: ArrayList<IncomeCatData>) {
+class SelectionListAdapter(
+    val onClickItem: (item: SelectionModel) -> Unit,
+    val onLongPressedItem: (item: SelectionModel) -> Unit
+) : RecyclerView.Adapter<SelectionListAdapter.ItemViewHolder>() {
+    private var list: ArrayList<SelectionModel> = ArrayList()
+
+    fun setDataSet(_list: ArrayList<SelectionModel>) {
         list.clear()
         list = _list
         notifyDataSetChanged()
     }
 
-    fun removeAt(position: Int?) {
-        position?.let {
-            list.removeAt(it)
-            notifyItemRemoved(it)
-        }
-    }
-
-    inner class ItemViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_category)) {
-        fun bind(item: IncomeCatData) = with(itemView) {
+    inner class ItemViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(parent.inflate(R.layout.list_item_category)) {
+        fun bind(item: SelectionModel) = with(itemView) {
             txt_transaction_name.text = item.name
             itemView.setOnClickListener {
                 onClickItem(item)

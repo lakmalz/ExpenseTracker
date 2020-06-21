@@ -17,6 +17,7 @@ import com.lakmalz.expensetracker.data.db.entity.AccountsData
 import com.lakmalz.expensetracker.data.db.entity.ExpenseCatData
 import com.lakmalz.expensetracker.data.db.entity.IncomeCatData
 import com.lakmalz.expensetracker.data.db.entity.TransactionsData
+import com.lakmalz.expensetracker.model.SelectionTypes
 import com.lakmalz.expensetracker.model.TransactionTypes
 import com.lakmalz.expensetracker.utils.Constant
 import com.lakmalz.expensetracker.utils.Constant.Companion.EXTRAS_ACCOUNT_ITEM
@@ -26,9 +27,7 @@ import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_ACCOUNT_LIST
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_EXPENSE_LIST
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_INCOME_LIST
 import com.lakmalz.expensetracker.utils.Utils
-import com.lakmalz.expensetracker.views.addnewtransaction.expensecategory.ExpenseSelectionListActivity
-import com.lakmalz.expensetracker.views.addnewtransaction.incomecategory.IncomeSelectionListActivity
-import com.lakmalz.expensetracker.views.addnewtransaction.selectaccounttype.AccountSelectionListActivity
+import com.lakmalz.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
 import kotlinx.android.synthetic.main.activity_add_new_transaction.*
 import java.util.*
 
@@ -66,6 +65,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         edt_account.tag = selectedAccount ?: null
         edt_account.setOnClickListener(this)
         edt_category.setOnClickListener(this)
+
     }
 
     private fun getExtras() {
@@ -248,18 +248,18 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun clickOnAccount() {
-        val intent = AccountSelectionListActivity.getIntent(this)
+        val intent = SelectionListActivity.getIntent(this, false, SelectionTypes.ACCOUNT.value)
         startActivityForResult(intent, REQUEST_ACCOUNT_LIST)
     }
 
     private fun clickOnCategory() {
         when (transactionType) {
             TransactionTypes.INCOME.name -> {
-                val intent = IncomeSelectionListActivity.getIntent(this)
+                val intent = SelectionListActivity.getIntent(this, SelectionTypes.INCOME.value)
                 startActivityForResult(intent, REQUEST_INCOME_LIST)
             }
             TransactionTypes.EXPENSE.name -> {
-                val intent = ExpenseSelectionListActivity.getIntent(this)
+                val intent = SelectionListActivity.getIntent(this, SelectionTypes.EXPENSE.value)
                 startActivityForResult(intent, REQUEST_EXPENSE_LIST)
             }
         }

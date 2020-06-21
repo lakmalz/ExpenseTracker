@@ -2,7 +2,8 @@ package com.lakmalz.expensetracker.utils
 
 class Constant {
     companion object {
-        const val EXTRAS_ENABLE_ADD_NEW = "enable_add_new"
+        const val EXTRAS_ENABLE_ADD_NEW_ACCOUNT = "enable_add_new_account"
+        const val EXTRAS_SELECTION_TYPE = "selection_type"
         const val EXTRAS_ACCOUNT_ITEM = "account_item"
         const val EXTRAS_INCOME_ITEM = "income_item"
         const val EXTRAS_EXPENSE_ITEM = "expense_item"
