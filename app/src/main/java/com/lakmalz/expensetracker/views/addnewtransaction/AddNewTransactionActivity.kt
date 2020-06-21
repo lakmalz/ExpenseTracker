@@ -18,7 +18,10 @@ import com.lakmalz.expensetracker.data.db.entity.ExpenseCatData
 import com.lakmalz.expensetracker.data.db.entity.IncomeCatData
 import com.lakmalz.expensetracker.data.db.entity.TransactionsData
 import com.lakmalz.expensetracker.model.TransactionTypes
+import com.lakmalz.expensetracker.utils.Constant
 import com.lakmalz.expensetracker.utils.Constant.Companion.EXTRAS_ACCOUNT_ITEM
+import com.lakmalz.expensetracker.utils.Constant.Companion.EXTRAS_EXPENSE_ITEM
+import com.lakmalz.expensetracker.utils.Constant.Companion.EXTRAS_INCOME_ITEM
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_ACCOUNT_LIST
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_EXPENSE_LIST
 import com.lakmalz.expensetracker.utils.Constant.Companion.REQUEST_INCOME_LIST
@@ -33,16 +36,22 @@ import java.util.*
 class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var viewModel: AddNewTransactionViewModel
-    var transactionType = TransactionTypes.EXPENSE.name
+    private var transactionType = TransactionTypes.EXPENSE.name
+    private var selectedAccount: AccountsData? = null
 
     companion object {
-        fun getIntent(context: Context) = Intent(context, AddNewTransactionActivity::class.java)
+        fun getIntent(context: Context, accountData: AccountsData): Intent {
+            val intent = Intent(context, AddNewTransactionActivity::class.java)
+            intent.putExtra(Constant.EXTRAS_ACCOUNT_ITEM, accountData)
+            return intent
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_transaction)
         viewModel = ViewModelProvider(this).get(AddNewTransactionViewModel::class.java)
+        getExtras()
         initUI()
     }
 
@@ -53,8 +62,16 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         supportActionBar?.title = getString(R.string.title_add_transaction)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_white)
         setTransactionType()
+        edt_account.setText(selectedAccount?.name ?: "")
+        edt_account.tag = selectedAccount ?: null
         edt_account.setOnClickListener(this)
         edt_category.setOnClickListener(this)
+    }
+
+    private fun getExtras() {
+        if (intent.hasExtra(EXTRAS_ACCOUNT_ITEM)) {
+            selectedAccount = intent.getParcelableExtra<AccountsData>(EXTRAS_ACCOUNT_ITEM)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,6 +91,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         val transaction = TransactionsData()
         val accountData = (edt_account.tag as AccountsData)
         transaction.accId = accountData.id
+
         when (transactionType) {
             TransactionTypes.INCOME.name -> {
                 val income = edt_category.tag as IncomeCatData
@@ -174,12 +192,12 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
                     edt_account.tag = item
                 }
                 REQUEST_INCOME_LIST -> {
-                    val item = data?.getParcelableExtra<IncomeCatData>(EXTRAS_ACCOUNT_ITEM)
+                    val item = data?.getParcelableExtra<IncomeCatData>(EXTRAS_INCOME_ITEM)
                     edt_category.setText(item?.name)
                     edt_category.tag = item
                 }
                 REQUEST_EXPENSE_LIST -> {
-                    val item = data?.getParcelableExtra<ExpenseCatData>(EXTRAS_ACCOUNT_ITEM)
+                    val item = data?.getParcelableExtra<ExpenseCatData>(EXTRAS_EXPENSE_ITEM)
                     edt_category.setText(item?.name)
                     edt_category.tag = item
                 }
@@ -189,12 +207,10 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
 
     private fun resetFields() {
         edt_category.hint = getString(R.string.select_expense)
-        edt_account.hint = getString(R.string.select_account)
         edt_amount.hint =
             "${getString(R.string.enter_amount)} (${Utils.getCurrencyInstance().currency})"
         edt_amount.text.clear()
         edt_category.text.clear()
-        edt_account.text.clear()
         edt_category.tag = null
     }
 

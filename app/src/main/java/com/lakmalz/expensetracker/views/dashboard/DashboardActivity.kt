@@ -11,6 +11,7 @@ import com.lakmalz.expensetracker.R
 import com.lakmalz.expensetracker.base.BaseActivity
 import com.lakmalz.expensetracker.data.db.entity.AccountsData
 import com.lakmalz.expensetracker.views.addnewtransaction.AddNewTransactionActivity
+import com.lakmalz.expensetracker.views.addnewtransaction.selectaccounttype.AccountSelectionListActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : BaseActivity() {
@@ -27,6 +28,10 @@ class DashboardActivity : BaseActivity() {
     private fun initUI() {
         initActionBar()
         setTabBar()
+        btn_add_account.setOnClickListener {
+            val intent = AccountSelectionListActivity.getIntent(this)
+            startActivity(intent)
+        }
     }
 
     private fun initActionBar() {
@@ -38,6 +43,7 @@ class DashboardActivity : BaseActivity() {
     private fun setTabBar() {
 
         viewModel.getAllASC().observe(this, Observer {
+            viewModel.accountList = it
             val tabAdapter = DashboardTabAdapter(this, it as ArrayList<AccountsData>)
             view_pager.adapter = tabAdapter
             val titleList = it.map { account ->
@@ -50,13 +56,12 @@ class DashboardActivity : BaseActivity() {
                 }
             }.attach()
         })
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                startActivity(AddNewTransactionActivity.getIntent(this))
+                startActivity(AddNewTransactionActivity.getIntent(this, viewModel.accountList[view_pager.currentItem]))
             }
         }
         return super.onOptionsItemSelected(item)

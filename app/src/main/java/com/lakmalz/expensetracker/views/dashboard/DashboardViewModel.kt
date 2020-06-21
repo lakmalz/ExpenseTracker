@@ -7,7 +7,8 @@ import com.lakmalz.expensetracker.data.db.entity.AccountsData
 import com.lakmalz.expensetracker.repository.AccountRepository
 
 class DashboardViewModel(application: Application) : AndroidViewModel(application) {
-    var selectedItem = 0
+    var selectedAccount = 0
+    var accountList:List<AccountsData> = emptyList()
 
     private var accountRepository: AccountRepository = AccountRepository.getInstance(application)
 

@@ -10,7 +10,6 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,16 +20,35 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="noScroll" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorTabSelectedTextColor"
-            app:tabMode="scrollable"
-            style="@style/Widget.MaterialComponents.TabLayout.Colored"
-            app:tabSelectedTextColor="@color/colorTabSelectedTextColor"
-            app:tabTextAppearance="?attr/textAppearanceBody1"
-            app:tabTextColor="@color/colorTabText" />
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_add_account"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                style="@style/Widget.MaterialComponents.TabLayout.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/btn_add_account"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabIndicatorColor="@color/colorTabSelectedTextColor"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/colorTabSelectedTextColor"
+                app:tabTextAppearance="?attr/textAppearanceBody1"
+                app:tabTextColor="@color/colorTabText" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
