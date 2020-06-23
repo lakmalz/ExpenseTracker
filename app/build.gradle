@@ -40,8 +40,14 @@ dependencies {
 
     //Android Unit Test and U.I. Test Library
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    implementation"android.arch.core:core-testing:1.1.1"
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    testCompile 'org.mockito:mockito-core:2.8.9'
 
     //Kotlin Library
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -59,4 +65,10 @@ dependencies {
     //Stetho
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
+    //RX
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0"
 }

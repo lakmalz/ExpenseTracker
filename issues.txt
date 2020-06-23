@@ -1,0 +1,18 @@
+1250.75
+lkr 1,250.75
+Euro 1.250,75
+
+3-time/date locale 
+"com.inex.expensetracker".
+4-edt amount should to format
+
+Todo
+4)Date and time formating by locale Date and time formater
+5)Convert to package name "com.inex.expensetracker".
+6)Unit testing
+7)Amount enter edittext value formating by current locale currency formate
+
+1) "5)" - Done
+2) "6)" 
+3) "4)" -> Send me a release here
+4) "7)"

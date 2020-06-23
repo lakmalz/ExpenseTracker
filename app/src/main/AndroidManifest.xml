@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.lakmalz.expensetracker">
+    package="com.inex.expensetracker">
 
     <dist:module dist:instant="true" />
 
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AppApplication"
+        android:name="com.inex.expensetracker.AppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,27 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.addnewtransaction.selectionlist.SelectionListActivity"
+            android:name="com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
-            android:name=".views.addnewtransaction.incomecategory.IncomeSelectionListActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity
-            android:name=".views.addnewtransaction.expensecategory.ExpenseSelectionListActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity
-            android:name=".views.addnewtransaction.selectaccounttype.AccountSelectionListActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity
-            android:name=".views.addnewtransaction.AddNewTransactionActivity"
+            android:name="com.inex.expensetracker.views.addnewtransaction.AddNewTransactionActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".views.dashboard.DashboardActivity"
+            android:name="com.inex.expensetracker.views.dashboard.DashboardActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
