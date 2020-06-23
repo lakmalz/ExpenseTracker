@@ -3,7 +3,7 @@ package com.inex.expensetracker.views.dashboard.account
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.inex.expensetracker.data.db.entity.TransactionsData
+import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.repository.TransactionRepository
 
 class AccountTransactionViewModel(application: Application) : AndroidViewModel(application) {

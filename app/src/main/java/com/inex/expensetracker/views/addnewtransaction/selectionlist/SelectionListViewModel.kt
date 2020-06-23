@@ -3,9 +3,9 @@ package com.inex.expensetracker.views.addnewtransaction.selectionlist
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.ExpenseCatData
-import com.inex.expensetracker.data.db.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.ExpenseCatData
+import com.inex.expensetracker.data.local.entity.IncomeCatData
 import com.inex.expensetracker.repository.AccountRepository
 import com.inex.expensetracker.repository.ExpenseRepository
 import com.inex.expensetracker.repository.IncomeRepository

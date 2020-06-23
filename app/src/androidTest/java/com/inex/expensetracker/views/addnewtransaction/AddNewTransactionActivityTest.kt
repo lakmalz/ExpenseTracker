@@ -6,9 +6,9 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
 import com.inex.expensetracker.R
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.ExpenseCatData
-import com.inex.expensetracker.data.db.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.ExpenseCatData
+import com.inex.expensetracker.data.local.entity.IncomeCatData
 import com.inex.expensetracker.model.TransactionTypes
 import org.junit.After
 import org.junit.Before

@@ -14,9 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.ExpenseCatData
-import com.inex.expensetracker.data.db.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.ExpenseCatData
+import com.inex.expensetracker.data.local.entity.IncomeCatData
 import com.inex.expensetracker.model.SelectionModel
 import com.inex.expensetracker.model.SelectionTypes
 import com.inex.expensetracker.utils.Constant

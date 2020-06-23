@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseFragment
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.TransactionsData
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.utils.Utils.Companion.showMessageWithTwoButtons
 import kotlinx.android.synthetic.main.fragment_account.*

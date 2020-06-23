@@ -1,4 +1,4 @@
-package com.inex.expensetracker.data.db.appdatabase
+package com.inex.expensetracker.data.local.appdatabase
 
 import android.content.Context
 import android.os.AsyncTask
@@ -6,14 +6,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.inex.expensetracker.data.db.dao.AccountDataDao
-import com.inex.expensetracker.data.db.dao.ExpenseCatDataDao
-import com.inex.expensetracker.data.db.dao.IncomeCatDataDao
-import com.inex.expensetracker.data.db.dao.TransactionsDataDao
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.ExpenseCatData
-import com.inex.expensetracker.data.db.entity.IncomeCatData
-import com.inex.expensetracker.data.db.entity.TransactionsData
+import com.inex.expensetracker.data.local.dao.AccountDataDao
+import com.inex.expensetracker.data.local.dao.ExpenseCatDataDao
+import com.inex.expensetracker.data.local.dao.IncomeCatDataDao
+import com.inex.expensetracker.data.local.dao.TransactionsDataDao
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.ExpenseCatData
+import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionsData
 
 @Database(
     entities = [AccountsData::class, ExpenseCatData::class, IncomeCatData::class, TransactionsData::class],

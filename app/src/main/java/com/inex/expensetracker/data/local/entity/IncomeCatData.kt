@@ -1,4 +1,4 @@
-package com.inex.expensetracker.data.db.entity
+package com.inex.expensetracker.data.local.entity
 
 import android.os.Parcel
 import android.os.Parcelable

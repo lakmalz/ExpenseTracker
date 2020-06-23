@@ -3,15 +3,15 @@ package com.inex.expensetracker.repository
 import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
-import com.inex.expensetracker.data.db.appdatabase.AppDatabase
-import com.inex.expensetracker.data.db.dao.AccountDataDao
-import com.inex.expensetracker.data.db.dao.ExpenseCatDataDao
-import com.inex.expensetracker.data.db.dao.IncomeCatDataDao
-import com.inex.expensetracker.data.db.dao.TransactionsDataDao
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.ExpenseCatData
-import com.inex.expensetracker.data.db.entity.IncomeCatData
-import com.inex.expensetracker.data.db.entity.TransactionsData
+import com.inex.expensetracker.data.local.appdatabase.AppDatabase
+import com.inex.expensetracker.data.local.dao.AccountDataDao
+import com.inex.expensetracker.data.local.dao.ExpenseCatDataDao
+import com.inex.expensetracker.data.local.dao.IncomeCatDataDao
+import com.inex.expensetracker.data.local.dao.TransactionsDataDao
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.ExpenseCatData
+import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionsData
 
 class TransactionRepository(applicationContext: Application) {
     private  var transactionsDataDao: TransactionsDataDao

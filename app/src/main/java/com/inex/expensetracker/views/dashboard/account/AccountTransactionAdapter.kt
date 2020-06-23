@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.inex.expensetracker.R
-import com.inex.expensetracker.data.db.entity.TransactionsData
+import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.utils.inflate
 import kotlinx.android.synthetic.main.list_item_transaction.view.*

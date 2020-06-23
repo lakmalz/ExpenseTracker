@@ -3,9 +3,9 @@ package com.inex.expensetracker.repository
 import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
-import com.inex.expensetracker.data.db.appdatabase.AppDatabase
-import com.inex.expensetracker.data.db.dao.AccountDataDao
-import com.inex.expensetracker.data.db.entity.AccountsData
+import com.inex.expensetracker.data.local.appdatabase.AppDatabase
+import com.inex.expensetracker.data.local.dao.AccountDataDao
+import com.inex.expensetracker.data.local.entity.AccountsData
 
 class AccountRepository(applicationContext: Application) {
     private var accountDataDAO: AccountDataDao

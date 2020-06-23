@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
-import com.inex.expensetracker.data.db.entity.AccountsData
-import com.inex.expensetracker.data.db.entity.ExpenseCatData
-import com.inex.expensetracker.data.db.entity.IncomeCatData
-import com.inex.expensetracker.data.db.entity.TransactionsData
+import com.inex.expensetracker.data.local.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.ExpenseCatData
+import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.model.SelectionTypes
 import com.inex.expensetracker.model.TransactionTypes
 import com.inex.expensetracker.utils.Constant

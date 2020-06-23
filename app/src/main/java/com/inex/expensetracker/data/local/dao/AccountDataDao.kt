@@ -1,8 +1,8 @@
-package com.inex.expensetracker.data.db.dao
+package com.inex.expensetracker.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.inex.expensetracker.data.db.entity.AccountsData
+import com.inex.expensetracker.data.local.entity.AccountsData
 @Dao
 interface AccountDataDao {
     @Query("SELECT * FROM AccountsData ORDER BY id DESC")

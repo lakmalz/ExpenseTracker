@@ -1,4 +1,4 @@
-package com.inex.expensetracker.data.db.entity
+package com.inex.expensetracker.data.local.entity
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,10 +6,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ExpenseCatData(
+data class AccountsData(
     var name: String?,
     var isActive: Boolean?
-) :Parcelable {
+): Parcelable{
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
@@ -30,14 +30,15 @@ data class ExpenseCatData(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ExpenseCatData> {
-        override fun createFromParcel(parcel: Parcel): ExpenseCatData {
-            return ExpenseCatData(parcel)
+    companion object CREATOR : Parcelable.Creator<AccountsData> {
+        override fun createFromParcel(parcel: Parcel): AccountsData {
+            return AccountsData(parcel)
         }
 
-        override fun newArray(size: Int): Array<ExpenseCatData?> {
+        override fun newArray(size: Int): Array<AccountsData?> {
             return arrayOfNulls(size)
         }
     }
+
 
 }
