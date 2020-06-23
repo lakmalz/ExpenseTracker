@@ -40,4 +40,7 @@
     <string name="enter_expense_name">Enter new expense</string>
     <string name="no_access_delete">"No access to delete "</string>
     <string name="item_successfully_updated">Item successfully updated</string>
+    <string name="today">Today </string>
+    <string name="yesterday">Yesterday </string>
+    <string name="ok">OK</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.Window
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import com.inex.expensetracker.R
 import java.text.NumberFormat
 import java.util.*
 
@@ -33,35 +34,23 @@ class Utils {
             val smsTime = Calendar.getInstance()
             smsTime.timeInMillis = updatedTimeInMilis
             val now = Calendar.getInstance()
-            val timeFormatString = "h:mm aa"
-            val dateTimeFormatString = "EEEE, MMMM d, h:mm aa"
-            val HOURS = 60 * 60 * 60.toLong()
+            val timeFormatString = Constant.TIME_FORMAT
+            val dateTimeFormatString = Constant.DATE_FORMAT
             return when {
                 now[Calendar.DATE] === smsTime[Calendar.DATE] -> {
-                    "Today " + DateFormat.format(timeFormatString, smsTime)
+                    "${context?.getString(R.string.today)} " + DateFormat.format(timeFormatString, smsTime)
                 }
                 now[Calendar.DATE] - smsTime[Calendar.DATE] === 1 -> {
-                    "Yesterday " + DateFormat.format(timeFormatString, smsTime)
+                    "${context?.getString(R.string.yesterday)} " + DateFormat.format(timeFormatString, smsTime)
                 }
                 now[Calendar.YEAR] === smsTime[Calendar.YEAR] -> {
                     DateFormat.format(dateTimeFormatString, smsTime).toString()
                 }
                 else -> {
-                    DateFormat.format("MMMM dd yyyy, h:mm aa", smsTime).toString()
+                    DateFormat.format(Constant.DATE_AND_TIME_FORMAT, smsTime).toString()
                 }
             }
         }
-
-        fun showMessage(
-            context: Context, @StringRes msg: Int,
-            onClickListener: DialogInterface.OnClickListener?
-        ) { showMessage(
-                context,
-                context.getString(msg),
-                onClickListener
-            )
-        }
-
 
         fun showMessage(
             context: Context?,
@@ -71,7 +60,7 @@ class Utils {
             val dialog =
                 AlertDialog.Builder(context!!)
             dialog.setMessage(msg)
-                .setPositiveButton("OK", onClickListener)
+                .setPositiveButton(context.getString(R.string.ok), onClickListener)
             val alert = dialog.create()
             alert.setCancelable(false)
             alert.requestWindowFeature(Window.FEATURE_NO_TITLE)

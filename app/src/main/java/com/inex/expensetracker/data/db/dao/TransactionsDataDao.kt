@@ -6,8 +6,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.inex.expensetracker.data.db.entity.TransactionsData
-import io.reactivex.Flowable
-import io.reactivex.Single
 
 @Dao
 interface TransactionsDataDao {

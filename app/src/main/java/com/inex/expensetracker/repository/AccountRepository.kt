@@ -8,7 +8,7 @@ import com.inex.expensetracker.data.db.dao.AccountDataDao
 import com.inex.expensetracker.data.db.entity.AccountsData
 
 class AccountRepository(applicationContext: Application) {
-    private lateinit var accountDataDAO: AccountDataDao
+    private var accountDataDAO: AccountDataDao
 
     companion object {
         @Volatile

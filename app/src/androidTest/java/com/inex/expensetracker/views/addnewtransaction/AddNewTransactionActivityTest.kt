@@ -14,12 +14,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
 
 class AddNewTransactionActivityTest {
 
     private var edtAmount: EditText? = null
     private var edtCategory: EditText? = null
     private var edtAccount: EditText? = null
+
+    @Mock
+
 
     @Rule
     @JvmField
@@ -35,87 +39,53 @@ class AddNewTransactionActivityTest {
         edtAmount = mActivity?.findViewById<EditText>(R.id.edt_amount)
     }
 
-
     @Test
-    fun testFunctionSaveTransactions(type: String, accountModel: AccountsData, incomeCatData: IncomeCatData, expenseCatData: ExpenseCatData, amount: Int){
+    fun testSaveIncome_SuccessMessage() {
+        val accountModel = AccountsData("Virtual wallet", true)
+        accountModel.id = 1
 
+        val incomeCatData = IncomeCatData("Foods", true)
+        incomeCatData.id = 1
+
+        testFunctionSaveTransactions(TransactionTypes.INCOME.name,accountModel, incomeCatData, null, 0.50 )
     }
 
-    /**
-     * Save expense type transactions when all fields provided
-     */
     @Test
-    fun testExpenseSaveValidateAccountIncomeCategoryAmount_NotNullInput_ReturnSuccess() {
-        var transactionType = TransactionTypes.INCOME.name
-        val accountModel = AccountsData("Account name", true)
+    fun testSaveExpense_SuccessMessage() {
+        val accountModel = AccountsData("Cash", true)
         accountModel.id = 1
 
-        val expenseCatData = ExpenseCatData("Expense name", true)
-        accountModel.id = 1
+        val expenseCatData = ExpenseCatData("Health and fitness", true)
+        expenseCatData.id = 1
 
+        testFunctionSaveTransactions(TransactionTypes.INCOME.name,accountModel, null, expenseCatData, 1200.00 )
+    }
+
+    @Test
+    fun testSaveIncome_Validate_Null_Account_Message() {
+        testFunctionSaveTransactions(TransactionTypes.INCOME.name,null, null, null, 500.00 )
+    }
+
+    @Test
+    fun testSaveExpense_Validate_Null_Account_Message() {
+        testFunctionSaveTransactions(TransactionTypes.EXPENSE.name,null, null, null, 8900.00 )
+    }
+
+    fun testFunctionSaveTransactions(type: String, accountModel: AccountsData?, incomeCatData: IncomeCatData?, expenseCatData: ExpenseCatData?, amount:Double){
+        mActivity?.transactionType = type
         edtAccount?.tag = accountModel
-        edtCategory?.tag = expenseCatData
-        edtAmount?.setText("15002.50")
+
+        if (type == TransactionTypes.INCOME.name) {
+            edtCategory?.tag = incomeCatData
+        } else {
+            edtCategory?.tag = expenseCatData
+        }
+
+        edtAmount?.setText("$amount")
 
         onView((withId(R.id.action_done)))
             .perform(click())
     }
-
-    /**
-     * Save expense type transactions when all fields provided
-     */
-    @Test
-    fun testExpenseSaveValidateAccountIncomeCategoryAmount_NullInput_ReturnMessage() {
-        var transactionType = TransactionTypes.EXPENSE.name
-        val accountModel = null
-
-        val expenseCatData = null
-
-        edtAccount?.tag = accountModel
-        edtCategory?.tag = expenseCatData
-        edtAmount?.setText("15002.50")
-
-        onView((withId(R.id.action_done)))
-            .perform(click())
-    }
-
-    /**
-     * Save income type transactions when all fields provided
-     */
-    @Test
-    fun testIncomeSaveValidateAccountIncomeCategoryAmount_NotNullInput_ReturnSuccess() {
-        var transactionType = TransactionTypes.INCOME.name
-        val accountModel = AccountsData("Account name", true)
-        accountModel.id = 1
-
-        val incomeCatData = IncomeCatData("Income name", true)
-        accountModel.id = 1
-
-        edtAccount?.tag = accountModel
-        edtCategory?.tag = incomeCatData
-        edtAmount?.setText("3002.50")
-
-        onView((withId(R.id.action_done)))
-            .perform(click())
-    }
-
-    /**
-     * Save income type transactions when the account model and income model send as a null value
-     */
-    @Test
-    fun testIncomeSaveValidateAccountIncomeCategoryAmount_NullInput_ReturnMessage() {
-        var transactionType = TransactionTypes.INCOME.name
-        val accountModel = null
-        val incomeCatData = null
-
-        edtAccount?.tag = accountModel
-        edtCategory?.tag = incomeCatData
-        edtAmount?.setText("")
-
-        onView((withId(R.id.action_done)))
-            .perform(click())
-    }
-
 
 
     @After

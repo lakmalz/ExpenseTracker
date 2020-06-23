@@ -5,19 +5,11 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.inex.expensetracker.R
-import io.reactivex.disposables.CompositeDisposable
 
 open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-
-    protected fun showMessage(title: String = getString(R.string.alert), message: String = getString(R.string.oops_something_went_wrong)) {
-        val alert = AlertDialog.Builder(this)
-        alert.setTitle(title)
-        alert.setMessage(message)
-        alert.show()
     }
 
     protected fun showMessage(message: String = getString(R.string.oops_something_went_wrong)) {

@@ -82,6 +82,9 @@ class AccountFragment : BaseFragment() {
         }
     }
 
+    /**
+     * get account current balance
+     */
     private fun getBalance() {
         accountsData?.id?.let { accId ->
             viewModel.getBalance(accId).observe(viewLifecycleOwner, Observer { balance ->

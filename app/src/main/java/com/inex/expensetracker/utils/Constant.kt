@@ -2,6 +2,9 @@ package com.inex.expensetracker.utils
 
 class Constant {
     companion object {
+        const val DATE_AND_TIME_FORMAT: String = "MMMM dd yyyy, h:mm aa"
+        const val TIME_FORMAT: String = "h:mm aa"
+        const val DATE_FORMAT: String = "EEEE, MMMM d, h:mm aa"
         const val EXTRAS_ENABLE_ADD_NEW_ACCOUNT = "enable_add_new_account"
         const val EXTRAS_SELECTION_TYPE = "selection_type"
         const val EXTRAS_ACCOUNT_ITEM = "account_item"

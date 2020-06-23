@@ -195,7 +195,7 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
             R.string.btn_update,
             DialogInterface.OnClickListener { dialog, _ ->
                 dialog.dismiss()
-                if (model.isActive!!) {
+                if (model.isActive) {
                     showMessage(getString(R.string.no_access_delete).plus(model.name))
                 } else {
                     deleteDialog(model)
@@ -253,15 +253,15 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
     private fun insert(nameValue: String) {
         when (selectionType) {
             SelectionTypes.ACCOUNT.value  -> {
-                val entity = AccountsData(edt_name.text.toString(), false)
+                val entity = AccountsData(nameValue, false)
                 viewModel.insertAccountItem(entity)
             }
             SelectionTypes.INCOME.value  -> {
-                val entity = IncomeCatData(edt_name.text.toString(), false)
+                val entity = IncomeCatData(nameValue, false)
                 viewModel.insertIncomeItem(entity)
             }
             SelectionTypes.EXPENSE.value ->{
-                val entity = ExpenseCatData(edt_name.text.toString(), false)
+                val entity = ExpenseCatData(nameValue, false)
                 viewModel.insertExpenseItem(entity)
             }
         }

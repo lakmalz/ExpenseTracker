@@ -13,20 +13,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AccountTransactionAdapter(val onLongPressItem: (item: TransactionsData) -> Unit) :
+
     RecyclerView.Adapter<AccountTransactionAdapter.ItemViewHolder>() {
+
     var format: NumberFormat = Utils.getCurrencyInstance()
+
     private var list: ArrayList<TransactionsData> = ArrayList()
+
     fun setDataSet(_list: ArrayList<TransactionsData>) {
         list.clear()
         list = _list
         notifyDataSetChanged()
-    }
-
-    fun removeAt(position: Int?) {
-        position?.let {
-            list.removeAt(it)
-            notifyItemRemoved(it)
-        }
     }
 
     inner class ItemViewHolder(parent: ViewGroup) :

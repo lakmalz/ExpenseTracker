@@ -34,9 +34,9 @@ import java.util.*
 
 class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
 
-    private lateinit var viewModel: AddNewTransactionViewModel
-    private var transactionType = TransactionTypes.EXPENSE.name
-    private var selectedAccount: AccountsData? = null
+     lateinit var viewModel: AddNewTransactionViewModel
+     var transactionType = TransactionTypes.EXPENSE.name
+     var selectedAccount: AccountsData? = null
 
     companion object {
         fun getIntent(context: Context, accountData: AccountsData): Intent {
@@ -101,7 +101,9 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-
+    /**
+     * transaction save into Database
+     */
     private fun saveTransaction(
         transactionType: String,
         accountModel: AccountsData,
@@ -120,7 +122,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
                 transaction.amount = amount
 
                 incomeCatData?.isActive = true
-//                viewModel.updateIncomeCatType(incomeCatData)
+                incomeCatData?.let { viewModel.updateIncomeCatType(it) }
             }
             TransactionTypes.EXPENSE.name -> {
                 if (edt_category.tag is ExpenseCatData) {
@@ -129,7 +131,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
                     transaction.amount = -edt_amount.text.toString().toDouble()
                     transaction.catName = expenseCatData?.name
                     expenseCatData?.isActive = true
-//                    viewModel.updateExpenseCatType(expenseCatData)
+                    expenseCatData?.let { viewModel.updateExpenseCatType(it) }
                 }
             }
         }
@@ -154,6 +156,9 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         return true
     }
 
+    /**
+     * set transaction types view
+     */
     private fun setTransactionType() {
         val chipExpense = Chip(this)
         val chipIncome = Chip(this)
@@ -225,6 +230,9 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * Reset fields when changing transaction type
+     */
     private fun resetFields() {
         edt_category.hint = getString(R.string.select_expense)
         edt_amount.hint =
@@ -234,6 +242,9 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         edt_category.tag = null
     }
 
+    /**
+     * Validate input fields
+     */
     private fun validation(): Boolean {
         when {
             edt_account.tag == null -> {
@@ -267,11 +278,17 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * Open account type selection view
+     */
     private fun clickOnAccount() {
         val intent = SelectionListActivity.getIntent(this, false, SelectionTypes.ACCOUNT.value)
         startActivityForResult(intent, REQUEST_ACCOUNT_LIST)
     }
 
+    /**
+     * Open transaction selection view
+     */
     private fun clickOnCategory() {
         when (transactionType) {
             TransactionTypes.INCOME.name -> {

@@ -12,13 +12,12 @@ import com.inex.expensetracker.data.db.entity.AccountsData
 import com.inex.expensetracker.data.db.entity.ExpenseCatData
 import com.inex.expensetracker.data.db.entity.IncomeCatData
 import com.inex.expensetracker.data.db.entity.TransactionsData
-import io.reactivex.Flowable
 
 class TransactionRepository(applicationContext: Application) {
-    private lateinit var transactionsDataDao: TransactionsDataDao
-    private lateinit var accountDataDao: AccountDataDao
-    private lateinit var incomeCatDataDao: IncomeCatDataDao
-    private lateinit var expenseCatDataDao: ExpenseCatDataDao
+    private  var transactionsDataDao: TransactionsDataDao
+    private  var accountDataDao: AccountDataDao
+    private  var incomeCatDataDao: IncomeCatDataDao
+    private  var expenseCatDataDao: ExpenseCatDataDao
 
     companion object {
         @Volatile
@@ -29,29 +28,29 @@ class TransactionRepository(applicationContext: Application) {
         }
     }
 
-    init{
+    init {
         val database: AppDatabase? = AppDatabase.getInstance(applicationContext.applicationContext)
         transactionsDataDao = database!!.getTransactionsDataDao()
-        accountDataDao = database!!.getAccountsDataDao()
-        incomeCatDataDao = database!!.getIncomeCatDataDao()
-        expenseCatDataDao = database!!.getExpenseCatDataDao()
+        accountDataDao = database.getAccountsDataDao()
+        incomeCatDataDao = database.getIncomeCatDataDao()
+        expenseCatDataDao = database.getExpenseCatDataDao()
     }
 
     fun insert(entity: TransactionsData) {
         AsyncTask.execute {
-           transactionsDataDao.insert(entity)
+            transactionsDataDao.insert(entity)
         }
     }
 
-    fun getAll(): LiveData<List<TransactionsData>>{
+    fun getAll(): LiveData<List<TransactionsData>> {
         return transactionsDataDao.getAll()
     }
 
-    fun getAllByAccountId(accId: Int): LiveData<List<TransactionsData>>{
+    fun getAllByAccountId(accId: Int): LiveData<List<TransactionsData>> {
         return transactionsDataDao.getAllByAccountId(accId)
     }
 
-    fun getBalance(accId: Int): LiveData<Double>{
+    fun getBalance(accId: Int): LiveData<Double> {
         return transactionsDataDao.getBalance(accId)
     }
 
