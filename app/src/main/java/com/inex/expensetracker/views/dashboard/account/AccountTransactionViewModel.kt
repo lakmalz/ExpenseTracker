@@ -4,12 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.inex.expensetracker.data.local.entity.TransactionsData
+import com.inex.expensetracker.model.TransactionListItem
 import com.inex.expensetracker.repository.TransactionRepository
 
 class AccountTransactionViewModel(application: Application) : AndroidViewModel(application) {
     private var transactionRepository: TransactionRepository = TransactionRepository.getInstance(application)
 
-    fun getAllByAccountId(accId: Int): LiveData<List<TransactionsData>> {
+    fun getAllByAccountId(accId: Int): LiveData<List<TransactionListItem>> {
         return transactionRepository.getAllByAccountId(accId)
     }
 

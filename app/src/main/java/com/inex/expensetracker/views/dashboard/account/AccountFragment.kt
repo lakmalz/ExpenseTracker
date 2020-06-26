@@ -13,6 +13,7 @@ import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseFragment
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionsData
+import com.inex.expensetracker.model.TransactionListItem
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.utils.Utils.Companion.showMessageWithTwoButtons
 import kotlinx.android.synthetic.main.fragment_account.*
@@ -77,7 +78,7 @@ class AccountFragment : BaseFragment() {
     private fun getData() {
         accountsData?.id?.let { accId ->
             viewModel.getAllByAccountId(accId).observe(viewLifecycleOwner, Observer { list ->
-                transactionAdapter.setDataSet(list as ArrayList<TransactionsData>)
+                transactionAdapter.setDataSet(list as ArrayList<TransactionListItem>)
             })
         }
     }

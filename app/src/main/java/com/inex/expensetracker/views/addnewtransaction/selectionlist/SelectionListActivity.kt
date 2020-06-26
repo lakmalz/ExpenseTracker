@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
 import com.inex.expensetracker.data.local.entity.AccountsData
-import com.inex.expensetracker.data.local.entity.ExpenseCatData
-import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.model.SelectionModel
 import com.inex.expensetracker.model.SelectionTypes
 import com.inex.expensetracker.utils.Constant
@@ -91,13 +90,13 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
                 })
             }
             SelectionTypes.INCOME.value -> {
-                viewModel.getAllIncomes().observe(this, Observer { incomeList ->
-                    selectionListAdapter.setDataSet(mappingIncomeList(incomeList) as ArrayList<SelectionModel>)
+                viewModel.getAllTractionCategory(true).observe(this, Observer { incomeList ->
+                    selectionListAdapter.setDataSet(mappingTransactionCategoryList(incomeList) as ArrayList<SelectionModel>)
                 })
             }
             SelectionTypes.EXPENSE.value -> {
-                viewModel.getAllExpenses().observe(this, Observer { expenseList ->
-                    selectionListAdapter.setDataSet(mappingExpenseList(expenseList) as ArrayList<SelectionModel>)
+                viewModel.getAllTractionCategory(false).observe(this, Observer { expenseList ->
+                    selectionListAdapter.setDataSet(mappingTransactionCategoryList(expenseList) as ArrayList<SelectionModel>)
                 })
             }
         }
@@ -141,13 +140,13 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
                 intent.putExtra(Constant.EXTRAS_ACCOUNT_ITEM, account)
             }
             SelectionTypes.INCOME.value -> {
-                val income = IncomeCatData(item.name, item.isActive)
-                income.id = item.id
+                val income = TransactionCategoryData(item.name, item.isActive, true)
+                income.categoryId = item.id
                 intent.putExtra(Constant.EXTRAS_INCOME_ITEM, income)
             }
             SelectionTypes.EXPENSE.value -> {
-                val expense = ExpenseCatData(item.name, item.isActive)
-                expense.id = item.id
+                val expense = TransactionCategoryData(item.name, item.isActive, false)
+                expense.categoryId = item.id
                 intent.putExtra(Constant.EXTRAS_EXPENSE_ITEM, expense)
             }
         }
@@ -236,14 +235,14 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
                 viewModel.deleteAccountItem(account)
             }
             SelectionTypes.INCOME.value  -> {
-                val account = IncomeCatData(item.name, item.isActive)
-                account.id = item.id
-                viewModel.deleteIncomeItem(account)
+                val account = TransactionCategoryData(item.name, item.isActive, true)
+                account.categoryId = item.id
+                viewModel.deleteTransactionCategoryItem(account)
             }
             SelectionTypes.EXPENSE.value ->{
-                val account = ExpenseCatData(item.name, item.isActive)
-                account.id = item.id
-                viewModel.deleteExpenseItem(account)
+                val account = TransactionCategoryData(item.name, item.isActive, false)
+                account.categoryId = item.id
+                viewModel.deleteTransactionCategoryItem(account)
             }
         }
     }
@@ -257,12 +256,12 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
                 viewModel.insertAccountItem(entity)
             }
             SelectionTypes.INCOME.value  -> {
-                val entity = IncomeCatData(nameValue, false)
-                viewModel.insertIncomeItem(entity)
+                val entity = TransactionCategoryData(nameValue, isActive = false, isIncomeCategory = true)
+                viewModel.insertTransactionCategoryItem(entity)
             }
             SelectionTypes.EXPENSE.value ->{
-                val entity = ExpenseCatData(nameValue, false)
-                viewModel.insertExpenseItem(entity)
+                val entity = TransactionCategoryData(nameValue, isActive = false, isIncomeCategory = false)
+                viewModel.insertTransactionCategoryItem(entity)
             }
         }
     }
@@ -278,14 +277,14 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
                 viewModel.updateAccountItem(account)
             }
             SelectionTypes.INCOME.value  -> {
-                val account = IncomeCatData(item.name, item.isActive)
-                account.id = item.id
-                viewModel.updateIncomeItem(account)
+                val account = TransactionCategoryData(item.name, item.isActive, true)
+                account.categoryId = item.id
+                viewModel.updateTransactionCategory(account)
             }
             SelectionTypes.EXPENSE.value ->{
-                val account = ExpenseCatData(item.name, item.isActive)
-                account.id = item.id
-                viewModel.updateExpenseItem(account)
+                val account = TransactionCategoryData(item.name, item.isActive, false)
+                account.categoryId = item.id
+                viewModel.updateTransactionCategory(account)
             }
         }
         showMessage(getString(R.string.item_successfully_updated))
@@ -341,28 +340,13 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
     }
 
     /**
-     * mapping income list to SelectionList
+     * mapping transaction category list to SelectionList
      */
-    private fun mappingIncomeList(incomeList: List<IncomeCatData>) = incomeList.map {
+    private fun mappingTransactionCategoryList(catList: List<TransactionCategoryData>) = catList.map {
         it.name?.let { name ->
             it.isActive?.let { isActive ->
                 SelectionModel(
-                    it.id,
-                    name,
-                    isActive
-                )
-            }
-        }
-    }
-
-    /**
-     * mapping expense list to SelectionList
-     */
-    private fun mappingExpenseList(expenseList: List<ExpenseCatData>) = expenseList.map {
-        it.name?.let { name ->
-            it.isActive?.let { isActive ->
-                SelectionModel(
-                    it.id,
+                    it.categoryId,
                     name,
                     isActive
                 )

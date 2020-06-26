@@ -7,8 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
 import com.inex.expensetracker.R
 import com.inex.expensetracker.data.local.entity.AccountsData
-import com.inex.expensetracker.data.local.entity.ExpenseCatData
-import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.model.TransactionTypes
 import org.junit.After
 import org.junit.Before
@@ -44,10 +43,10 @@ class AddNewTransactionActivityTest {
         val accountModel = AccountsData("Virtual wallet", true)
         accountModel.id = 1
 
-        val incomeCatData = IncomeCatData("Foods", true)
-        incomeCatData.id = 1
+        val transactionCat = TransactionCategoryData("Foods", isActive = true, isIncomeCategory = true)
+        transactionCat.categoryId = 1
 
-        testFunctionSaveTransactions(TransactionTypes.INCOME.name,accountModel, incomeCatData, null, 0.50 )
+        testFunctionSaveTransactions(TransactionTypes.INCOME.name,accountModel, transactionCat,0.50 )
     }
 
     @Test
@@ -55,30 +54,30 @@ class AddNewTransactionActivityTest {
         val accountModel = AccountsData("Cash", true)
         accountModel.id = 1
 
-        val expenseCatData = ExpenseCatData("Health and fitness", true)
-        expenseCatData.id = 1
+        val transactionCat = TransactionCategoryData("Health and fitness", isActive = true, isIncomeCategory = false)
+        transactionCat.categoryId = 1
 
-        testFunctionSaveTransactions(TransactionTypes.INCOME.name,accountModel, null, expenseCatData, 1200.00 )
+        testFunctionSaveTransactions(TransactionTypes.INCOME.name,accountModel,  transactionCat, 1200.00 )
     }
 
     @Test
     fun testSaveIncome_Validate_Null_Account_Message() {
-        testFunctionSaveTransactions(TransactionTypes.INCOME.name,null, null, null, 500.00 )
+        testFunctionSaveTransactions(TransactionTypes.INCOME.name,null, null, 500.00 )
     }
 
     @Test
     fun testSaveExpense_Validate_Null_Account_Message() {
-        testFunctionSaveTransactions(TransactionTypes.EXPENSE.name,null, null, null, 8900.00 )
+        testFunctionSaveTransactions(TransactionTypes.EXPENSE.name,null,  null, 8900.00 )
     }
 
-    fun testFunctionSaveTransactions(type: String, accountModel: AccountsData?, incomeCatData: IncomeCatData?, expenseCatData: ExpenseCatData?, amount:Double){
+    fun testFunctionSaveTransactions(type: String, accountModel: AccountsData?, transactionCategoryData: TransactionCategoryData?, amount:Double){
         mActivity?.transactionType = type
         edtAccount?.tag = accountModel
 
         if (type == TransactionTypes.INCOME.name) {
-            edtCategory?.tag = incomeCatData
+            edtCategory?.tag = transactionCategoryData
         } else {
-            edtCategory?.tag = expenseCatData
+            edtCategory?.tag = transactionCategoryData
         }
 
         edtAmount?.setText("$amount")

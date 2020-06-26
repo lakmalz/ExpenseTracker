@@ -3,8 +3,7 @@ package com.inex.expensetracker.views.addnewtransaction
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.inex.expensetracker.data.local.entity.AccountsData
-import com.inex.expensetracker.data.local.entity.ExpenseCatData
-import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.repository.TransactionRepository
 
@@ -24,11 +23,7 @@ class AddNewTransactionViewModel : AndroidViewModel {
         transactionRepository.updateAccountType(entity)
     }
 
-    fun updateIncomeCatType(entity: IncomeCatData) {
-        transactionRepository.updateIncomeCatType(entity)
-    }
-
-    fun updateExpenseCatType(entity: ExpenseCatData) {
-        transactionRepository.updateExpenseCatType(entity)
+    fun updateTransactionCategoryType(entity: TransactionCategoryData) {
+        transactionRepository.updateTransactionCategoryType(entity)
     }
 }

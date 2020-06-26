@@ -6,38 +6,42 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ExpenseCatData(
+data class TransactionCategoryData(
     var name: String?,
-    var isActive: Boolean?
-) :Parcelable {
+    var isActive: Boolean?,
+    var isIncomeCategory: Boolean?
+) : Parcelable {
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    var categoryId: Int = 0
 
     constructor(parcel: Parcel) : this(
         parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean
     ) {
-        id = parcel.readInt()
+        categoryId = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeValue(isActive)
-        parcel.writeInt(id)
+        parcel.writeValue(isIncomeCategory)
+        parcel.writeInt(categoryId)
     }
 
     override fun describeContents(): Int {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ExpenseCatData> {
-        override fun createFromParcel(parcel: Parcel): ExpenseCatData {
-            return ExpenseCatData(parcel)
+    companion object CREATOR : Parcelable.Creator<TransactionCategoryData> {
+        override fun createFromParcel(parcel: Parcel): TransactionCategoryData {
+            return TransactionCategoryData(parcel)
         }
 
-        override fun newArray(size: Int): Array<ExpenseCatData?> {
+        override fun newArray(size: Int): Array<TransactionCategoryData?> {
             return arrayOfNulls(size)
         }
     }
+
 
 }

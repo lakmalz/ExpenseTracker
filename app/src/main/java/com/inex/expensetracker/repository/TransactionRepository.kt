@@ -5,19 +5,17 @@ import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.inex.expensetracker.data.local.appdatabase.AppDatabase
 import com.inex.expensetracker.data.local.dao.AccountDataDao
-import com.inex.expensetracker.data.local.dao.ExpenseCatDataDao
-import com.inex.expensetracker.data.local.dao.IncomeCatDataDao
+import com.inex.expensetracker.data.local.dao.TransactionCategoryDataDao
 import com.inex.expensetracker.data.local.dao.TransactionsDataDao
 import com.inex.expensetracker.data.local.entity.AccountsData
-import com.inex.expensetracker.data.local.entity.ExpenseCatData
-import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
+import com.inex.expensetracker.model.TransactionListItem
 
 class TransactionRepository(applicationContext: Application) {
     private  var transactionsDataDao: TransactionsDataDao
     private  var accountDataDao: AccountDataDao
-    private  var incomeCatDataDao: IncomeCatDataDao
-    private  var expenseCatDataDao: ExpenseCatDataDao
+    private  var transactionCategoryDataDao: TransactionCategoryDataDao
 
     companion object {
         @Volatile
@@ -32,8 +30,7 @@ class TransactionRepository(applicationContext: Application) {
         val database: AppDatabase? = AppDatabase.getInstance(applicationContext.applicationContext)
         transactionsDataDao = database!!.getTransactionsDataDao()
         accountDataDao = database.getAccountsDataDao()
-        incomeCatDataDao = database.getIncomeCatDataDao()
-        expenseCatDataDao = database.getExpenseCatDataDao()
+        transactionCategoryDataDao = database.getTransactionCategoryDataDao()
     }
 
     fun insert(entity: TransactionsData) {
@@ -46,7 +43,7 @@ class TransactionRepository(applicationContext: Application) {
         return transactionsDataDao.getAll()
     }
 
-    fun getAllByAccountId(accId: Int): LiveData<List<TransactionsData>> {
+    fun getAllByAccountId(accId: Int): LiveData<List<TransactionListItem>> {
         return transactionsDataDao.getAllByAccountId(accId)
     }
 
@@ -66,15 +63,9 @@ class TransactionRepository(applicationContext: Application) {
         }
     }
 
-    fun updateIncomeCatType(item: IncomeCatData?) {
+    fun updateTransactionCategoryType(item: TransactionCategoryData?) {
         AsyncTask.execute {
-            incomeCatDataDao.update(item)
-        }
-    }
-
-    fun updateExpenseCatType(item: ExpenseCatData?) {
-        AsyncTask.execute {
-            expenseCatDataDao.update(item)
+            transactionCategoryDataDao.update(item)
         }
     }
 }

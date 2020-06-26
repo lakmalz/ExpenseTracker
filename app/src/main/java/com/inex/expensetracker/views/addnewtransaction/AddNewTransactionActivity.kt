@@ -14,8 +14,7 @@ import com.google.android.material.chip.Chip
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
 import com.inex.expensetracker.data.local.entity.AccountsData
-import com.inex.expensetracker.data.local.entity.ExpenseCatData
-import com.inex.expensetracker.data.local.entity.IncomeCatData
+import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.model.SelectionTypes
 import com.inex.expensetracker.model.TransactionTypes
@@ -34,9 +33,9 @@ import java.util.*
 
 class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
 
-     lateinit var viewModel: AddNewTransactionViewModel
-     var transactionType = TransactionTypes.EXPENSE.name
-     var selectedAccount: AccountsData? = null
+    lateinit var viewModel: AddNewTransactionViewModel
+    var transactionType = TransactionTypes.EXPENSE.name
+    var selectedAccount: AccountsData? = null
 
     companion object {
         fun getIntent(context: Context, accountData: AccountsData): Intent {
@@ -77,21 +76,11 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         when (item.itemId) {
             R.id.action_done -> {
                 if (validation()) {
-                    var income: IncomeCatData? = null
-                    var expense: ExpenseCatData? = null
-                    when (transactionType) {
-                        TransactionTypes.INCOME.name -> {
-                            income = edt_category.tag as IncomeCatData
-                        }
-                        else -> {
-                            expense = edt_category.tag as ExpenseCatData
-                        }
-                    }
+                    var transactionCat = edt_category.tag as TransactionCategoryData
                     saveTransaction(
                         transactionType,
                         edt_account.tag as AccountsData,
-                        income,
-                        expense ,
+                        transactionCat,
                         edt_amount.text.toString().toDouble()
                     )
                 }
@@ -107,34 +96,27 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
     private fun saveTransaction(
         transactionType: String,
         accountModel: AccountsData,
-        incomeCatData: IncomeCatData?,
-        expenseCatData: ExpenseCatData?,
+        transactionCategoryData: TransactionCategoryData?,
         amount: Double
     ) {
         val transaction = TransactionsData()
         transaction.accId = accountModel.id
 
+        transaction.catId = transactionCategoryData?.categoryId
+        transaction.catName = transactionCategoryData?.name
+        transaction.amount = amount
+
         when (transactionType) {
             TransactionTypes.INCOME.name -> {
-                transaction.catId = incomeCatData?.id
-                transaction.catName = incomeCatData?.name
                 transaction.isIncome = true
-                transaction.amount = amount
-
-                incomeCatData?.isActive = true
-                incomeCatData?.let { viewModel.updateIncomeCatType(it) }
             }
             TransactionTypes.EXPENSE.name -> {
-                if (edt_category.tag is ExpenseCatData) {
-                    transaction.catId = expenseCatData?.id
-                    transaction.isIncome = false
-                    transaction.amount = -edt_amount.text.toString().toDouble()
-                    transaction.catName = expenseCatData?.name
-                    expenseCatData?.isActive = true
-                    expenseCatData?.let { viewModel.updateExpenseCatType(it) }
-                }
+                transaction.isIncome = false
             }
         }
+        transactionCategoryData?.isActive = true
+        transactionCategoryData?.let { viewModel.updateTransactionCategoryType(it) }
+
         transaction.currency = Currency.getInstance(Locale.getDefault()).currencyCode
         transaction.timestamp = System.currentTimeMillis()
         val id = viewModel.insert(transaction)
@@ -217,12 +199,13 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
                     edt_account.tag = item
                 }
                 REQUEST_INCOME_LIST -> {
-                    val item = data?.getParcelableExtra<IncomeCatData>(EXTRAS_INCOME_ITEM)
+                    val item = data?.getParcelableExtra<TransactionCategoryData>(EXTRAS_INCOME_ITEM)
                     edt_category.setText(item?.name)
                     edt_category.tag = item
                 }
                 REQUEST_EXPENSE_LIST -> {
-                    val item = data?.getParcelableExtra<ExpenseCatData>(EXTRAS_EXPENSE_ITEM)
+                    val item =
+                        data?.getParcelableExtra<TransactionCategoryData>(EXTRAS_EXPENSE_ITEM)
                     edt_category.setText(item?.name)
                     edt_category.tag = item
                 }
