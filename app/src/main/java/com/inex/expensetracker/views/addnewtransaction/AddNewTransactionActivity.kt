@@ -137,7 +137,13 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         transaction.currency = Currency.getInstance(Locale.getDefault()).currencyCode
         transaction.timestamp = System.currentTimeMillis()
         val id = viewModel.insert(transaction)
-
+        Utils.showMessage(
+            this,
+            getString(R.string.transaction_added_successful),
+            DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+                onBackPressed()
+            })
         accountModel.isActive = true
         viewModel.updateAccountType(accountModel)
     }
