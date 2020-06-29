@@ -43,4 +43,5 @@
     <string name="today">Today </string>
     <string name="yesterday">Yesterday </string>
     <string name="ok">OK</string>
+    <string name="fail_msg_transaction_insert">Transaction insert failed.</string>
 </resources>

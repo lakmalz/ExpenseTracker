@@ -50,7 +50,24 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_add_new_transaction)
         viewModel = ViewModelProvider(this).get(AddNewTransactionViewModel::class.java)
         getExtras()
+        mutableData()
         initUI()
+    }
+
+    private fun mutableData() {
+        viewModel.insertTransactionData.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                Utils.showMessage(
+                    this,
+                    getString(R.string.transaction_added_successful),
+                    DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                        onBackPressed()
+                    })
+            } else {
+                showMessage(getString(R.string.fail_msg_transaction_insert))
+            }
+        })
     }
 
     private fun initUI() {
@@ -121,16 +138,8 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         transaction.timestamp = System.currentTimeMillis()
         val id = viewModel.insert(transaction)
 
-
         accountModel.isActive = true
         viewModel.updateAccountType(accountModel)
-        Utils.showMessage(
-            this,
-            getString(R.string.transaction_added_successful),
-            DialogInterface.OnClickListener { dialog, which ->
-                dialog.dismiss()
-                onBackPressed()
-            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -13,16 +13,12 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
 
 class AddNewTransactionActivityTest {
 
     private var edtAmount: EditText? = null
     private var edtCategory: EditText? = null
     private var edtAccount: EditText? = null
-
-    @Mock
-
 
     @Rule
     @JvmField

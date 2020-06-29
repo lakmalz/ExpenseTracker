@@ -1,6 +1,7 @@
 package com.inex.expensetracker.repository
 
 import android.app.Application
+import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.inex.expensetracker.data.local.appdatabase.AppDatabase
@@ -12,36 +13,32 @@ import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.model.TransactionListItem
 
-class TransactionRepository(applicationContext: Application) {
-    private  var transactionsDataDao: TransactionsDataDao
-    private  var accountDataDao: AccountDataDao
-    private  var transactionCategoryDataDao: TransactionCategoryDataDao
+class TransactionRepository(applicationContext: Context) {
+    private var transactionsDataDao: TransactionsDataDao
+    private var accountDataDao: AccountDataDao
+    private var transactionCategoryDataDao: TransactionCategoryDataDao
 
     companion object {
         @Volatile
         private var INSTANCE: TransactionRepository? = null
 
-        fun getInstance(applicationContext: Application): TransactionRepository {
+        fun getInstance(applicationContext: Context): TransactionRepository {
             return INSTANCE ?: TransactionRepository(applicationContext)
         }
     }
 
     init {
-        val database: AppDatabase? = AppDatabase.getInstance(applicationContext.applicationContext)
+        val database: AppDatabase? = AppDatabase.getInstance(applicationContext)
         transactionsDataDao = database!!.getTransactionsDataDao()
         accountDataDao = database.getAccountsDataDao()
         transactionCategoryDataDao = database.getTransactionCategoryDataDao()
     }
 
-    fun insert(entity: TransactionsData) {
-        AsyncTask.execute {
-            transactionsDataDao.insert(entity)
-        }
-    }
+    fun insert(entity: TransactionsData) : Long =  transactionsDataDao.insert(entity)
 
-    fun getAll(): LiveData<List<TransactionsData>> {
-        return transactionsDataDao.getAll()
-    }
+    fun getAll(): LiveData<List<TransactionsData>> = transactionsDataDao.getAll()
+
+    fun getByTimeStamp(timeStamp: Long): TransactionsData = transactionsDataDao.getByTimeStamp(timeStamp)
 
     fun getAllByAccountId(accId: Int): LiveData<List<TransactionListItem>> {
         return transactionsDataDao.getAllByAccountId(accId)
@@ -51,10 +48,8 @@ class TransactionRepository(applicationContext: Application) {
         return transactionsDataDao.getBalance(accId)
     }
 
-    fun delete(item: TransactionsData) {
-        AsyncTask.execute {
+    suspend fun delete(item: TransactionsData) {
             transactionsDataDao.delete(item)
-        }
     }
 
     fun updateAccountType(item: AccountsData) {
