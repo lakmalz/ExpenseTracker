@@ -42,7 +42,7 @@ class AddNewTransactionViewModelTest {
         ent.currency = "LKR"
         coEvery { dataRepository.insert(ent) } returns 1
         assertEquals(1, 1)
-        Log.i(TAG, "test insert transaction: ")
+
     }
 
     @After
