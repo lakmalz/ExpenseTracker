@@ -17,14 +17,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name="com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"></activity>
+
         <activity
             android:name="com.inex.expensetracker.views.addnewtransaction.AddNewTransactionActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name="com.inex.expensetracker.views.dashboard.DashboardActivity"
             android:screenOrientation="portrait"
@@ -35,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
