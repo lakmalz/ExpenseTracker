@@ -25,7 +25,7 @@ class AddNewTransactionViewModel : BaseViewModel {
 
     fun insert(entity: TransactionsData) {
         uiScope.launch {
-           transactionRepository.insert(entity)
+            insertTransactionData.postValue(transactionRepository.insert(entity))
         }
     }
 

@@ -28,6 +28,7 @@ import com.inex.expensetracker.utils.Constant.Companion.REQUEST_INCOME_LIST
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
 import kotlinx.android.synthetic.main.activity_add_new_transaction.*
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -50,11 +51,11 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_add_new_transaction)
         viewModel = ViewModelProvider(this).get(AddNewTransactionViewModel::class.java)
         getExtras()
-        mutableData()
+        liveObserveData()
         initUI()
     }
 
-    private fun mutableData() {
+    private fun liveObserveData() {
         viewModel.insertTransactionData.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 Utils.showMessage(
@@ -81,6 +82,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         edt_account.tag = selectedAccount
         edt_account.setOnClickListener(this)
         edt_category.setOnClickListener(this)
+        txt_symbol.text = Utils.getCurrencySymbol()
     }
 
     private fun getExtras() {
@@ -106,7 +108,6 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-
     /**
      * transaction save into Database
      */
@@ -131,19 +132,18 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
                 transaction.isIncome = false
             }
         }
+
+        transaction.currency = Utils.getLocaleCurrencyCode()
+        transaction.timestamp = System.currentTimeMillis()
+
+        // save new transaction
+        viewModel.insert(transaction)
+
+        // transaction category update as a Active category
         transactionCategoryData?.isActive = true
         transactionCategoryData?.let { viewModel.updateTransactionCategoryType(it) }
 
-        transaction.currency = Currency.getInstance(Locale.getDefault()).currencyCode
-        transaction.timestamp = System.currentTimeMillis()
-        val id = viewModel.insert(transaction)
-        Utils.showMessage(
-            this,
-            getString(R.string.transaction_added_successful),
-            DialogInterface.OnClickListener { dialog, which ->
-                dialog.dismiss()
-                onBackPressed()
-            })
+        // account type update as a Active account type
         accountModel.isActive = true
         viewModel.updateAccountType(accountModel)
     }
@@ -232,9 +232,12 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
      * Reset fields when changing transaction type
      */
     private fun resetFields() {
+        var format: NumberFormat = Utils.getCurrencyInstance()
+        format.currency = Currency.getInstance(Utils.getLocaleCurrencyCode())
+        val placeHolderValue = format.format(1234567890.99)
         edt_category.hint = getString(R.string.select_expense)
         edt_amount.hint =
-            "${getString(R.string.enter_amount)} (${Utils.getCurrencyInstance().currency})"
+            "${getString(R.string.enter_amount)} (${placeHolderValue})"
         edt_amount.text.clear()
         edt_category.text.clear()
         edt_category.tag = null

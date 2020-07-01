@@ -12,6 +12,18 @@ import com.inex.expensetracker.data.local.dao.TransactionsDataDao
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
+import com.inex.expensetracker.utils.PrePopulateData.Companion.ACC_BANK_ACCOUNT
+import com.inex.expensetracker.utils.PrePopulateData.Companion.ACC_CASH
+import com.inex.expensetracker.utils.PrePopulateData.Companion.ACC_CREDIT_CARD
+import com.inex.expensetracker.utils.PrePopulateData.Companion.EXPENSE
+import com.inex.expensetracker.utils.PrePopulateData.Companion.EXP_ENTERTAINMENT
+import com.inex.expensetracker.utils.PrePopulateData.Companion.EXP_GROCERY
+import com.inex.expensetracker.utils.PrePopulateData.Companion.EXP_GYM
+import com.inex.expensetracker.utils.PrePopulateData.Companion.EXP_HEALTH
+import com.inex.expensetracker.utils.PrePopulateData.Companion.EXP_TAX
+import com.inex.expensetracker.utils.PrePopulateData.Companion.INCOME
+import com.inex.expensetracker.utils.PrePopulateData.Companion.INCOME_DIVIDENDS
+import com.inex.expensetracker.utils.PrePopulateData.Companion.INCOME_SALARY
 
 @Database(
     entities = [AccountsData::class, TransactionCategoryData::class, TransactionsData::class],
@@ -25,13 +37,14 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var instance: AppDatabase? = null
+        private const val databaseName = "expense_tracker"
 
         fun getInstance(context: Context): AppDatabase? {
             if (instance == null) {
                 synchronized(AppDatabase::class) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        AppDatabase::class.java, "expense_tracker"
+                        AppDatabase::class.java, databaseName
                     )
                         .fallbackToDestructiveMigration()
                         .addCallback(roomCallback)
@@ -58,18 +71,18 @@ abstract class AppDatabase : RoomDatabase() {
 
             override fun doInBackground(vararg param: Unit) {
                 // Accounts
-                accountsDAO?.insert(AccountsData("Cash", false))
-                accountsDAO?.insert(AccountsData("Credit Card", false))
-                accountsDAO?.insert(AccountsData("Bank account", false))
+                accountsDAO?.insert(AccountsData(ACC_CASH, false))
+                accountsDAO?.insert(AccountsData(ACC_CREDIT_CARD, false))
+                accountsDAO?.insert(AccountsData(ACC_BANK_ACCOUNT, false))
                 // Expenses
-                transactionCategoryDAO?.insert(TransactionCategoryData("Tax", false, isIncomeCategory = false))
-                transactionCategoryDAO?.insert(TransactionCategoryData("Grocery", false, isIncomeCategory = false))
-                transactionCategoryDAO?.insert(TransactionCategoryData("Entertainment", false, isIncomeCategory = false))
-                transactionCategoryDAO?.insert(TransactionCategoryData("Gym", false, isIncomeCategory = false))
-                transactionCategoryDAO?.insert(TransactionCategoryData("Health", false, isIncomeCategory = false))
+                transactionCategoryDAO?.insert(TransactionCategoryData(EXP_TAX, false, isIncomeCategory = EXPENSE))
+                transactionCategoryDAO?.insert(TransactionCategoryData(EXP_GROCERY, false, isIncomeCategory = EXPENSE))
+                transactionCategoryDAO?.insert(TransactionCategoryData(EXP_ENTERTAINMENT, false, isIncomeCategory = EXPENSE))
+                transactionCategoryDAO?.insert(TransactionCategoryData(EXP_GYM, false, isIncomeCategory = EXPENSE))
+                transactionCategoryDAO?.insert(TransactionCategoryData(EXP_HEALTH, false, isIncomeCategory = EXPENSE))
                 // Income
-                transactionCategoryDAO?.insert(TransactionCategoryData("Salary", false, isIncomeCategory = true))
-                transactionCategoryDAO?.insert(TransactionCategoryData("Dividends", false, isIncomeCategory = true))
+                transactionCategoryDAO?.insert(TransactionCategoryData(INCOME_SALARY, false, isIncomeCategory = INCOME))
+                transactionCategoryDAO?.insert(TransactionCategoryData(INCOME_DIVIDENDS, false, isIncomeCategory = INCOME))
             }
         }
     }

@@ -19,16 +19,16 @@ class Utils {
             1.0f
         )
 
+        fun getCurrencySymbol(): String = Currency.getInstance(getLocaleCurrencyCode()).symbol
+
+
         fun getCurrencyInstance(): NumberFormat = NumberFormat.getCurrencyInstance()
 
         fun getFormattedCurrencyValue(value: Double): String {
             val format = getCurrencyInstance()
-            format.currency = Currency.getInstance(getDefaultCurrencyCode())
+            format.currency = Currency.getInstance(getLocaleCurrencyCode())
             return format.format(value)
         }
-
-        private fun getDefaultCurrencyCode(): String =
-            Currency.getInstance(Locale.getDefault()).currencyCode
 
         fun getFormattedDate(context: Context?, updatedTimeInMilis: Long): String? {
             val smsTime = Calendar.getInstance()
@@ -85,6 +85,8 @@ class Utils {
             alert.requestWindowFeature(Window.FEATURE_NO_TITLE)
             alert.show()
         }
+
+        fun getLocaleCurrencyCode(): String = Currency.getInstance(Locale.getDefault()).currencyCode
     }
 
 

@@ -8,6 +8,9 @@ interface AccountDataDao {
     @Query("SELECT * FROM AccountsData ORDER BY id DESC")
     fun getAll(): LiveData<List<AccountsData>>
 
+    @Query("SELECT id FROM AccountsData WHERE name=:name")
+    fun getAccountByName(name: String): Int
+
     @Query("SELECT * FROM AccountsData ORDER BY id ASC")
     fun getAllASC(): LiveData<List<AccountsData>>
 
