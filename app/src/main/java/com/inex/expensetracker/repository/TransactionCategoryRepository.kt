@@ -3,11 +3,12 @@ package com.inex.expensetracker.repository
 import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import com.inex.expensetracker.base.BaseRepository
 import com.inex.expensetracker.data.local.appdatabase.AppDatabase
 import com.inex.expensetracker.data.local.dao.TransactionCategoryDataDao
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 
-class TransactionCategoryRepository(applicationContext: Application) {
+class TransactionCategoryRepository(applicationContext: Application): BaseRepository(applicationContext) {
     private var transactionCategoryDataDao: TransactionCategoryDataDao
 
     companion object {
@@ -20,7 +21,6 @@ class TransactionCategoryRepository(applicationContext: Application) {
     }
 
     init{
-        val database: AppDatabase? = AppDatabase.getInstance(applicationContext.applicationContext)
         transactionCategoryDataDao = database!!.getTransactionCategoryDataDao()
     }
 

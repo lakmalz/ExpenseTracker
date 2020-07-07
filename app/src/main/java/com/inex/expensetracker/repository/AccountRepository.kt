@@ -4,11 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import com.inex.expensetracker.base.BaseRepository
 import com.inex.expensetracker.data.local.appdatabase.AppDatabase
 import com.inex.expensetracker.data.local.dao.AccountDataDao
 import com.inex.expensetracker.data.local.entity.AccountsData
 
-class AccountRepository(applicationContext: Context) {
+class AccountRepository(applicationContext: Context):BaseRepository(applicationContext) {
     private var accountDataDAO: AccountDataDao
 
     companion object {
@@ -21,7 +22,6 @@ class AccountRepository(applicationContext: Context) {
     }
 
     init{
-        val database: AppDatabase? = AppDatabase.getInstance(applicationContext)
         accountDataDAO = database!!.getAccountsDataDao()
     }
 

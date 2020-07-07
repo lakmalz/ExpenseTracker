@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import com.inex.expensetracker.base.BaseRepository
 import com.inex.expensetracker.data.local.appdatabase.AppDatabase
 import com.inex.expensetracker.data.local.dao.AccountDataDao
 import com.inex.expensetracker.data.local.dao.TransactionCategoryDataDao
@@ -13,7 +14,7 @@ import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
 import com.inex.expensetracker.model.TransactionListItem
 
-class TransactionRepository(applicationContext: Context) {
+class TransactionRepository(applicationContext: Context): BaseRepository(applicationContext) {
     private var transactionsDataDao: TransactionsDataDao
     private var accountDataDao: AccountDataDao
     private var transactionCategoryDataDao: TransactionCategoryDataDao
@@ -28,10 +29,9 @@ class TransactionRepository(applicationContext: Context) {
     }
 
     init {
-        val database: AppDatabase? = AppDatabase.getInstance(applicationContext)
         transactionsDataDao = database!!.getTransactionsDataDao()
-        accountDataDao = database.getAccountsDataDao()
-        transactionCategoryDataDao = database.getTransactionCategoryDataDao()
+        accountDataDao = database!!.getAccountsDataDao()
+        transactionCategoryDataDao = database!!.getTransactionCategoryDataDao()
     }
 
     fun insert(entity: TransactionsData) : Long =  transactionsDataDao.insert(entity)
