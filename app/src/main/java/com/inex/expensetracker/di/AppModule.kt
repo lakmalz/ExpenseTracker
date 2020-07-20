@@ -26,7 +26,7 @@ var appModule: Module = module {
     single { get<AppDatabase>().getTransactionsDataDao() }
 
     factory { AccountRepository(get()) }
-    factory { TransactionRepository(get()) }
+    factory { TransactionRepository(get(), get(), get()) }
     factory { TransactionCategoryRepository(get()) }
 }
 
