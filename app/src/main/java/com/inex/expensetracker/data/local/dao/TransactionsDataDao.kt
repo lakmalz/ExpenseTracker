@@ -16,7 +16,7 @@ interface TransactionsDataDao {
     @Query("SELECT * FROM TransactionsData WHERE id=:id")
     fun getByID(id: Int): TransactionsData
 
-    @Query("SELECT TransactionsData.id,TransactionsData.accId,TransactionsData.catId,TransactionsData.catName, TransactionsData.isIncome, TransactionsData.amount, TransactionsData.currency, TransactionsData.timestamp, TransactionsData.accId, TransactionCategoryData.categoryId, TransactionCategoryData.name FROM TransactionsData  INNER join TransactionCategoryData ON TransactionsData.catId = TransactionCategoryData.categoryId WHERE TransactionsData.accId =:accId  ORDER BY timestamp DESC")
+    @Query("SELECT TransactionsData.id,TransactionsData.accId,TransactionsData.catId, TransactionsData.isIncome, TransactionsData.amount, TransactionsData.currency, TransactionsData.timestamp, TransactionsData.accId, TransactionCategoryData.categoryId, TransactionCategoryData.name FROM TransactionsData  INNER join TransactionCategoryData ON TransactionsData.catId = TransactionCategoryData.categoryId WHERE TransactionsData.accId =:accId  ORDER BY timestamp DESC")
     fun getAllByAccountId(accId: Int): LiveData<List<TransactionListItem>>
 
     @Query("SELECT SUM(amount) FROM TransactionsData WHERE accId =:accId")

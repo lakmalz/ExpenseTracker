@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inex.expensetracker.R
@@ -14,19 +13,20 @@ import com.inex.expensetracker.model.SelectionTypes
 import com.inex.expensetracker.views.addnewtransaction.AddNewTransactionActivity
 import com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardActivity : BaseActivity() {
 
-    private lateinit var viewModel: DashboardViewModel
+    private val viewModel by viewModel<DashboardViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         initUI()
     }
 
     private fun initUI() {
+        viewModel.prePopulateData()
         initActionBar()
         setTabBar()
         btn_add_account.setOnClickListener {

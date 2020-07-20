@@ -45,7 +45,6 @@ class AccountTransactionAdapter(val onLongPressItem: (item: TransactionsData) ->
                 selectItem.id = item.transaction.id
                 selectItem.accId = item.transaction.accId
                 selectItem.catId = item.transaction.catId
-                selectItem.catName = item.transaction.catName
                 selectItem.isIncome = item.transaction.isIncome
                 selectItem.amount = item.transaction.amount
                 selectItem.currency = item.transaction.currency

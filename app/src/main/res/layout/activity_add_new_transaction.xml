@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_scrollFlags="noScroll" />
 
-    <com.google.android.material.chip.ChipGroup
+    <!--<com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group_transaction_types"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +27,47 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:selectionRequired="true"
         app:singleSelection="true">
+
+    </com.google.android.material.chip.ChipGroup>-->
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_transaction_types"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:singleLine="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:checkable="true"
+            android:text="@string/expense"
+            app:checkedIconEnabled="true"
+            app:iconStartPadding="@dimen/dim_8dp"
+            android:layout_marginEnd="4dp"
+            app:checkedIcon="@drawable/ic_check_circle_black_24dp"
+            android:textColor="@color/text_chip"
+            android:textSize="@dimen/font_14sp"
+            app:chipBackgroundColor="@color/bg_chip" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:checkable="true"
+            app:iconStartPadding="@dimen/dim_8dp"
+            app:checkedIcon="@drawable/ic_check_circle_black_24dp"
+            android:text="@string/income"
+            android:textColor="@color/text_chip"
+            android:textSize="@dimen/font_14sp"
+            app:chipBackgroundColor="@color/bg_chip" />
 
     </com.google.android.material.chip.ChipGroup>
 

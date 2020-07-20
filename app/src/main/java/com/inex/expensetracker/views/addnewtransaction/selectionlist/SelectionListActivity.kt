@@ -22,13 +22,15 @@ import com.inex.expensetracker.utils.Constant
 import com.inex.expensetracker.utils.Constant.Companion.EXTRAS_ENABLE_ADD_NEW_ACCOUNT
 import com.inex.expensetracker.utils.Constant.Companion.EXTRAS_SELECTION_TYPE
 import com.inex.expensetracker.utils.Utils.Companion.showMessageWithTwoButtons
+import com.inex.expensetracker.views.addnewtransaction.AddNewTransactionViewModel
 import kotlinx.android.synthetic.main.activity_selection_list.*
 import kotlinx.android.synthetic.main.fragment_account.rv_list
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SelectionListActivity : BaseActivity(), View.OnClickListener {
 
-    private lateinit var viewModel: SelectionListViewModel
+    private val viewModel by viewModel<SelectionListViewModel>()
     private lateinit var selectionListAdapter: SelectionListAdapter
     private var isEnableAddNewAccount = false
      var selectionType: Int? = null
@@ -67,7 +69,6 @@ class SelectionListActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selection_list)
-        viewModel = ViewModelProvider(this).get(SelectionListViewModel::class.java)
         getExtras()
         initUI()
         getData()
