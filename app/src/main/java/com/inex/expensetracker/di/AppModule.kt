@@ -19,7 +19,7 @@ import org.koin.dsl.module
 var appModule: Module = module {
 
     single {
-        Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.DATABASE_NAME).build()
+        Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.DATABASE_NAME).fallbackToDestructiveMigration().build()
     }
     
     single { get<AppDatabase>().getAccountsDataDao() }
