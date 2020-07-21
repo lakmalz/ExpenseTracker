@@ -4,10 +4,10 @@
 Clone this repository branch [CR_001](https://github.com/lakmalz/ExpenseTracker/tree/CR_001) and import into **Android Studio**
 
 ### Libraries
-- ***Kotlin***
-- ***MVVM***
-- ***Room*** Database
-- ***Coroutines***
+- Kotlin
+- MVVM
+- Room Database
+- Coroutines
 
 - [Kion](https://insert-koin.io/) A pragmatic lightweight dependency injection framework for Kotlin
   -[Dagger 2 and Koin comparison](https://medium.com/mobile-app-development-publication/dagger-2-and-koin-comparison-4223dae9725d)
