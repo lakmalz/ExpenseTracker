@@ -1,4 +1,4 @@
-package com.inex.expensetracker
+package com.inex.expensetracker.base
 
 import android.app.Application
 import com.facebook.stetho.Stetho
@@ -8,13 +8,13 @@ import com.inex.expensetracker.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class AppApplication : Application() {
+class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
         Stetho.initializeWithDefaults(this)
         startKoin {
-            androidContext(this@AppApplication)
+            androidContext(this@BaseApplication)
             modules(listOf(appModule, viewModelModule, sharedPreferencesModule))
         }
     }

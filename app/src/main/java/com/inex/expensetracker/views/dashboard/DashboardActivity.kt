@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
 import com.inex.expensetracker.data.local.entity.AccountsData
-import com.inex.expensetracker.model.SelectionTypes
+import com.inex.expensetracker.data.model.SelectionTypes
 import com.inex.expensetracker.views.addnewtransaction.AddNewTransactionActivity
 import com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -45,8 +45,7 @@ class DashboardActivity : BaseActivity() {
 
         viewModel.getAllASC().observe(this, Observer {
             viewModel.accountList = it
-            val tabAdapter = DashboardTabAdapter(this, it as ArrayList<AccountsData>)
-            view_pager.adapter = tabAdapter
+            view_pager.adapter = DashboardTabAdapter(this, it as ArrayList<AccountsData>)
             val titleList = it.map { account ->
                 account.name
             }

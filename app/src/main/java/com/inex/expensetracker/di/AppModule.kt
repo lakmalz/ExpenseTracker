@@ -19,8 +19,9 @@ import org.koin.dsl.module
 var appModule: Module = module {
 
     single {
-        Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.databaseName).build()
+        Room.databaseBuilder(get(), AppDatabase::class.java, AppDatabase.DATABASE_NAME).build()
     }
+    
     single { get<AppDatabase>().getAccountsDataDao() }
     single { get<AppDatabase>().getTransactionCategoryDataDao() }
     single { get<AppDatabase>().getTransactionsDataDao() }

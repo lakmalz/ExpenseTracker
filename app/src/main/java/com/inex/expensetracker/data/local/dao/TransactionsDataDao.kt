@@ -3,7 +3,7 @@ package com.inex.expensetracker.data.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.inex.expensetracker.data.local.entity.TransactionsData
-import com.inex.expensetracker.model.TransactionListItem
+import com.inex.expensetracker.data.model.TransactionListItem
 
 @Dao
 interface TransactionsDataDao {

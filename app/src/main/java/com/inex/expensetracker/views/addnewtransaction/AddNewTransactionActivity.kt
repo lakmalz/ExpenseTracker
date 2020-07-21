@@ -8,16 +8,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.chip.Chip
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
-import com.inex.expensetracker.model.SelectionTypes
-import com.inex.expensetracker.model.TransactionTypes
+import com.inex.expensetracker.data.model.SelectionTypes
+import com.inex.expensetracker.data.model.TransactionTypes
 import com.inex.expensetracker.utils.Constant
 import com.inex.expensetracker.utils.Constant.Companion.EXTRAS_ACCOUNT_ITEM
 import com.inex.expensetracker.utils.Constant.Companion.EXTRAS_EXPENSE_ITEM
@@ -27,7 +24,6 @@ import com.inex.expensetracker.utils.Constant.Companion.REQUEST_EXPENSE_LIST
 import com.inex.expensetracker.utils.Constant.Companion.REQUEST_INCOME_LIST
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
-import com.inex.expensetracker.views.dashboard.account.AccountTransactionViewModel
 import kotlinx.android.synthetic.main.activity_add_new_transaction.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.NumberFormat

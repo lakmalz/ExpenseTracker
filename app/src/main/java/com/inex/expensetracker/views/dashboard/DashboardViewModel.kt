@@ -33,6 +33,9 @@ class DashboardViewModel(private var accountRepository: AccountRepository, priva
         return accountRepository.getAllASC()
     }
 
+    /**
+     * Save pre-populated data
+     */
     fun prePopulateData() {
         val dbSaved = sharedPref.getBooleanValue(AppSharedPreferences.PREF_DB_SAVED_PRE_POPULATED)
         if (!dbSaved) {

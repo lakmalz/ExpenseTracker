@@ -14,11 +14,12 @@ import com.inex.expensetracker.data.local.entity.TransactionsData
     version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
+
+    companion object {
+        const val DATABASE_NAME = "expense_tracker"
+    }
+
     abstract fun getAccountsDataDao(): AccountDataDao
     abstract fun getTransactionCategoryDataDao(): TransactionCategoryDataDao
     abstract fun getTransactionsDataDao(): TransactionsDataDao
-
-    companion object {
-        const val databaseName = "expense_tracker"
-    }
 }
