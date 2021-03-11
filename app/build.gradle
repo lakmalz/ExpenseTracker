@@ -75,4 +75,9 @@ dependencies {
     implementation "org.koin:koin-android:2.0.1"
     implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
     implementation 'org.koin:koin-androidx-scope:2.0.1'
+
+        def appCenterSdkVersion = '4.1.0'
+        implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+        implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
 }

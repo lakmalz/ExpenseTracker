@@ -12,6 +12,9 @@ import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.model.SelectionTypes
 import com.inex.expensetracker.views.addnewtransaction.AddNewTransactionActivity
 import com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,6 +24,10 @@ class DashboardActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCenter.start(
+            application, "6a49df8a-69d1-4a87-b642-99244a301c38",
+            Analytics::class.java, Crashes::class.java
+        )
         setContentView(R.layout.activity_dashboard)
         initUI()
     }
@@ -61,7 +68,12 @@ class DashboardActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add -> {
-                startActivity(AddNewTransactionActivity.getIntent(this, viewModel.accountList[view_pager.currentItem]))
+                startActivity(
+                    AddNewTransactionActivity.getIntent(
+                        this,
+                        viewModel.accountList[view_pager.currentItem]
+                    )
+                )
             }
         }
         return super.onOptionsItemSelected(item)
