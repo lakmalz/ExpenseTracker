@@ -5,6 +5,7 @@ import androidx.room.*
 import com.inex.expensetracker.data.local.entity.AccountsData
 @Dao
 interface AccountDataDao {
+
     @Query("SELECT * FROM AccountsData ORDER BY id DESC")
     fun getAll(): LiveData<List<AccountsData>>
 

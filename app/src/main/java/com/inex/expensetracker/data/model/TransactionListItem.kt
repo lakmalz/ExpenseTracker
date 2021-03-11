@@ -1,4 +1,4 @@
-package com.inex.expensetracker.model
+package com.inex.expensetracker.data.model
 
 import androidx.room.Embedded
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData

@@ -6,20 +6,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.inex.expensetracker.R
-import com.inex.expensetracker.base.BaseFragment
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionsData
-import com.inex.expensetracker.model.TransactionListItem
+import com.inex.expensetracker.data.model.TransactionListItem
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.utils.Utils.Companion.showMessageWithTwoButtons
 import kotlinx.android.synthetic.main.fragment_account.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AccountFragment : BaseFragment() {
-    private lateinit var viewModel: AccountTransactionViewModel
+class AccountFragment : Fragment() {
+
+    private val viewModel by viewModel<AccountTransactionViewModel>()
     private lateinit var transactionAdapter: AccountTransactionAdapter
     private var accountsData: AccountsData? = null
 
@@ -42,7 +43,6 @@ class AccountFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(activity!!).get(AccountTransactionViewModel::class.java)
         initUI()
         getData()
         getBalance()

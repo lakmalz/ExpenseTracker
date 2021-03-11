@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.inex.expensetracker.R
 import com.inex.expensetracker.data.local.entity.TransactionsData
-import com.inex.expensetracker.model.TransactionListItem
+import com.inex.expensetracker.data.model.TransactionListItem
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.utils.inflate
 import kotlinx.android.synthetic.main.list_item_transaction.view.*
@@ -45,7 +45,6 @@ class AccountTransactionAdapter(val onLongPressItem: (item: TransactionsData) ->
                 selectItem.id = item.transaction.id
                 selectItem.accId = item.transaction.accId
                 selectItem.catId = item.transaction.catId
-                selectItem.catName = item.transaction.catName
                 selectItem.isIncome = item.transaction.isIncome
                 selectItem.amount = item.transaction.amount
                 selectItem.currency = item.transaction.currency

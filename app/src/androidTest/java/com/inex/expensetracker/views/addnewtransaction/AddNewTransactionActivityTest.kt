@@ -8,7 +8,7 @@ import androidx.test.rule.ActivityTestRule
 import com.inex.expensetracker.R
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData
-import com.inex.expensetracker.model.TransactionTypes
+import com.inex.expensetracker.data.model.TransactionTypes
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

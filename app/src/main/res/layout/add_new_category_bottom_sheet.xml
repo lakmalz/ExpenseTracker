@@ -76,7 +76,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_32dp">
+                    android:layout_marginTop="@dimen/dim_32dp">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_submit"

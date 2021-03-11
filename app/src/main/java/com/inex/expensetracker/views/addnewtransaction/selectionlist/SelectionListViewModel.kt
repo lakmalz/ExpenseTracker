@@ -1,16 +1,16 @@
 package com.inex.expensetracker.views.addnewtransaction.selectionlist
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.repository.AccountRepository
 import com.inex.expensetracker.repository.TransactionCategoryRepository
 
-class SelectionListViewModel(application: Application) : AndroidViewModel(application) {
-    private var accountRepository: AccountRepository = AccountRepository.getInstance(application)
-    private var transactionCategoryRepository: TransactionCategoryRepository = TransactionCategoryRepository.getInstance(application)
+class SelectionListViewModel(
+    private var accountRepository: AccountRepository,
+    private var transactionCategoryRepository: TransactionCategoryRepository
+) : ViewModel() {
 
     fun insertAccountItem(entity: AccountsData) {
         accountRepository.insert(entity)
@@ -23,6 +23,7 @@ class SelectionListViewModel(application: Application) : AndroidViewModel(applic
     fun deleteAccountItem(entity: AccountsData) {
         accountRepository.delete(entity)
     }
+
     fun deleteTransactionCategoryItem(entity: TransactionCategoryData) {
         transactionCategoryRepository.delete(entity)
     }

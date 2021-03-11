@@ -1,4 +1,4 @@
-package com.inex.expensetracker.model
+package com.inex.expensetracker.data.model
 
 import android.os.Parcel
 import android.os.Parcelable

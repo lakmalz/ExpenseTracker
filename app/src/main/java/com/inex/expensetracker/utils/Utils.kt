@@ -21,7 +21,6 @@ class Utils {
 
         fun getCurrencySymbol(): String = Currency.getInstance(getLocaleCurrencyCode()).symbol
 
-
         fun getCurrencyInstance(): NumberFormat = NumberFormat.getCurrencyInstance()
 
         fun getFormattedCurrencyValue(value: Double): String {

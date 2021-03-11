@@ -6,9 +6,7 @@ import com.inex.expensetracker.base.BaseActivity
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.views.dashboard.account.AccountFragment
 
-class DashboardTabAdapter(activity: BaseActivity, var list:MutableList<AccountsData>) :
-
-    FragmentStateAdapter(activity) {
+class DashboardTabAdapter(activity: BaseActivity, var list:MutableList<AccountsData>) : FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int {
         return list.size
