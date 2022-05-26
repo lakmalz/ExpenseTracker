@@ -8,16 +8,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.chip.Chip
 import com.inex.expensetracker.R
 import com.inex.expensetracker.base.BaseActivity
 import com.inex.expensetracker.data.local.entity.AccountsData
 import com.inex.expensetracker.data.local.entity.TransactionCategoryData
 import com.inex.expensetracker.data.local.entity.TransactionsData
-import com.inex.expensetracker.model.SelectionTypes
-import com.inex.expensetracker.model.TransactionTypes
+import com.inex.expensetracker.data.model.SelectionTypes
+import com.inex.expensetracker.data.model.TransactionTypes
 import com.inex.expensetracker.utils.Constant
 import com.inex.expensetracker.utils.Constant.Companion.EXTRAS_ACCOUNT_ITEM
 import com.inex.expensetracker.utils.Constant.Companion.EXTRAS_EXPENSE_ITEM
@@ -28,13 +25,14 @@ import com.inex.expensetracker.utils.Constant.Companion.REQUEST_INCOME_LIST
 import com.inex.expensetracker.utils.Utils
 import com.inex.expensetracker.views.addnewtransaction.selectionlist.SelectionListActivity
 import kotlinx.android.synthetic.main.activity_add_new_transaction.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.NumberFormat
 import java.util.*
 
 
 class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
 
-    lateinit var viewModel: AddNewTransactionViewModel
+    private val viewModel by viewModel<AddNewTransactionViewModel>()
     var transactionType = TransactionTypes.EXPENSE.name
     var selectedAccount: AccountsData? = null
 
@@ -49,7 +47,6 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_transaction)
-        viewModel = ViewModelProvider(this).get(AddNewTransactionViewModel::class.java)
         getExtras()
         liveObserveData()
         initUI()
@@ -77,7 +74,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = getString(R.string.title_add_transaction)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_white)
-        setTransactionType()
+        setTransactionTypeItems()
         edt_account.setText(selectedAccount?.name ?: "")
         edt_account.tag = selectedAccount
         edt_account.setOnClickListener(this)
@@ -121,7 +118,6 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         transaction.accId = accountModel.id
 
         transaction.catId = transactionCategoryData?.categoryId
-        transaction.catName = transactionCategoryData?.name
         transaction.amount = amount
 
         when (transactionType) {
@@ -130,6 +126,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
             }
             TransactionTypes.EXPENSE.name -> {
                 transaction.isIncome = false
+                transaction.amount = -(amount)
             }
         }
 
@@ -156,47 +153,19 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
     /**
      * set transaction types view
      */
-    private fun setTransactionType() {
-        val chipExpense = Chip(this)
-        val chipIncome = Chip(this)
-        Utils.customWeight.setMargins(getPixelsFromDp(this, 8f), 0, 0, 0)
-        chipIncome.layoutParams = Utils.customWeight
-        chipIncome.chipBackgroundColor = ContextCompat.getColorStateList(this, R.color.bg_chip)
-        chipIncome.setTextColor(ContextCompat.getColorStateList(this, R.color.text_chip))
-        chipIncome.text = getString(R.string.income)
-        chipIncome.isFocusable = true
-        chipIncome.isClickable = true
-        chipIncome.textSize = 14.0f
-        chipIncome.isCheckable = true
-        chipIncome.checkedIcon =
-            ContextCompat.getDrawable(this, R.drawable.ic_check_circle_black_24dp)
-        chipIncome.setOnClickListener {
-            chipExpense.isChecked = false
+    private fun setTransactionTypeItems() {
+        chip_income.setOnClickListener {
             transactionType = TransactionTypes.INCOME.name
             resetFields()
             edt_category.hint = getString(R.string.select_income)
         }
 
-        chipExpense.layoutParams = Utils.customWeight
-        chipExpense.chipBackgroundColor = ContextCompat.getColorStateList(this, R.color.bg_chip)
-        chipExpense.setTextColor(ContextCompat.getColorStateList(this, R.color.text_chip))
-        chipExpense.text = getString(R.string.expense)
-        chipExpense.isFocusable = true
-        chipExpense.isClickable = true
-        chipExpense.textSize = 14.0f
-        chipExpense.isCheckable = true
-        chipExpense.isChecked = true
-        chipExpense.checkedIcon =
-            ContextCompat.getDrawable(this, R.drawable.ic_check_circle_black_24dp)
-        chipExpense.setOnClickListener {
-            chipIncome.isChecked = false
+        chip_expense.setOnClickListener {
             transactionType = TransactionTypes.EXPENSE.name
             resetFields()
             edt_category.hint = getString(R.string.select_expense)
         }
         resetFields()
-        chip_group_transaction_types.addView(chipExpense)
-        chip_group_transaction_types.addView(chipIncome)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -236,8 +205,7 @@ class AddNewTransactionActivity : BaseActivity(), View.OnClickListener {
         format.currency = Currency.getInstance(Utils.getLocaleCurrencyCode())
         val placeHolderValue = format.format(1234567890.99)
         edt_category.hint = getString(R.string.select_expense)
-        edt_amount.hint =
-            "${getString(R.string.enter_amount)} (${placeHolderValue})"
+        edt_amount.hint = "${getString(R.string.enter_amount)} (${placeHolderValue})"
         edt_amount.text.clear()
         edt_category.text.clear()
         edt_category.tag = null

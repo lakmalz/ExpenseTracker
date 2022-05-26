@@ -3,7 +3,7 @@ package com.inex.expensetracker.views.addnewtransaction.selectionlist
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inex.expensetracker.R
-import com.inex.expensetracker.model.SelectionModel
+import com.inex.expensetracker.data.model.SelectionModel
 import com.inex.expensetracker.utils.inflate
 import kotlinx.android.synthetic.main.list_item_category.view.*
 
